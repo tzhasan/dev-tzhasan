@@ -5,13 +5,19 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        primary: ["Exo", "Rajdhani", "sans-serif"],
+        logo: ["Foldit", "Rajdhani", "sans-serif"],
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary_black: "#1f1f1f",
+        white: "white",
+        topnav: "#262626",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
