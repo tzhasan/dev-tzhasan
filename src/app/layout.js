@@ -1,4 +1,5 @@
 import "./globals.css";
+import ThemeProvider from "./provider/themeProvider";
 
 export const metadata = {
   title: "Dev-TzHasan",
@@ -8,8 +9,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="font-primary " >
-        {children}
+      <body className="font-primary ">
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

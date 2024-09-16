@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import { themeProvider } from '@/app/provider/themeProvider';
+import React, { useContext, useEffect, useState } from 'react'
 
 export default function ThemeButton() {
-  const [isChecked, setisChecked] = useState(false);
+  const { isChecked, setisChecked } = useContext(themeProvider);
   const handleToggle = (e) => {
     setisChecked(event.target.checked);
   };
+  // 
+
   useEffect(() => {
     if (isChecked) {
-      document.body.classList.add("dark");
+      document.body.classList.add("dark")
     } else {
       document.body.classList.remove("dark");
     }
-    return () => {
-      document.body.classList.remove("dark");
-    };
   }, [isChecked]);
+  
   return (
     <>
       <label className="swap swap-rotate">

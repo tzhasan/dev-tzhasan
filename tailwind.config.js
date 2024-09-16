@@ -15,7 +15,9 @@ module.exports = {
       colors: {
         primary_black: "#1f1f1f",
         white: "white",
+        wave: "#f3f4f5",
         topnav: "#262626",
+        darkmode: "#083344",
       },
     },
   },

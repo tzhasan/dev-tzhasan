@@ -1,7 +1,10 @@
+import { themeProvider } from '@/app/provider/themeProvider';
 import Image from 'next/image';
-import React from 'react'
+import React, { useContext } from 'react'
 
 export default function Banner() {
+  const { isChecked, setisChecked } = useContext(themeProvider);
+
   return (
     <div className="bg-primary_black pt-[2%] ">
       <div className="primary-width flex flex-col md:flex-row justify-between items-center gap-5">
@@ -29,7 +32,9 @@ export default function Banner() {
           />
         </div>
       </div>
-      <div className="bg-white dark:bg-zinc-900">
+      <div
+        className={`${isChecked ? "bg-cyan-950": "bg-white"}`}
+      >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 100 1440 150">
           <path
             fill="#1f1f1f"

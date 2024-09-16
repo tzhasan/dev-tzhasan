@@ -13,9 +13,15 @@
 .primary-width{
 @apply w-[90%] md:w-[80%] lg:w-[60%]  mx-auto
 }
-/* .dark{
-@apply text-white
-} */
+.dark{
+@apply text-zinc-800 dark:text-white
+}
+.darkdiv{
+@apply bg-zinc-800 dark:bg-white
+}
+.softdark{
+ @apply text-["#414141"] dark:text-white
+}
  /* font-family: "Foldit", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;

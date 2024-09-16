@@ -2,13 +2,15 @@
 import React, { useEffect, useState } from 'react'
 import Banner from './banner';
 import AboutMe from './aboutme';
+import PortFolios from './portFolios';
 
 export default function HomePage() {
- 
+  
   return (
-    <div className=" dark:bg-zinc-900">
+    <div>
       <Banner />
       <AboutMe />
+      <PortFolios/>
     </div>
   );
 }
