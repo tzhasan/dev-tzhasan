@@ -3,24 +3,46 @@ import React, { useContext, useEffect, useState } from 'react'
 
 export default function ThemeButton() {
   const { isChecked, setisChecked } = useContext(themeProvider);
-  const handleToggle = (e) => {
-    setisChecked(event.target.checked);
-  };
-  // 
 
   useEffect(() => {
-    localStorage.setItem('theme','light')
-    if (isChecked) {
-      document.body.classList.add("dark")
-    localStorage.setItem("theme", "dark");
-
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      setisChecked(true);
+      document.body.classList.add("dark");
     } else {
+      setisChecked(false);
       document.body.classList.remove("dark");
-    localStorage.setItem("theme", "light");
-
     }
-  }, [isChecked]);
+  }, []);
+  const handleToggle = (e) => {
+    const checked = e.target.checked;
+    setisChecked(checked);
+
+    if (checked) {
+      localStorage.setItem("theme", "dark");
+      document.body.classList.add("dark");
+    } else {
+      localStorage.setItem("theme", "light");
+      document.body.classList.remove("dark");
+    }
+  };
+  // const handleToggle = (e) => {
+  //   setisChecked(event.target.checked);
+  // };
   
+  // useEffect(() => {
+  //   localStorage.setItem('theme','light')
+  //   if (isChecked) {
+  //     document.body.classList.add("dark")
+  //   localStorage.setItem("theme", "dark");
+
+  //   } else {
+  //     document.body.classList.remove("dark");
+  //   localStorage.setItem("theme", "light");
+
+  //   }
+  // }, [isChecked]);
+
   return (
     <>
       <label className="swap swap-rotate">
