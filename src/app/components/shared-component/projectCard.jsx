@@ -3,7 +3,6 @@ import Link from 'next/link';
 import React from 'react'
 
 export default function ProjectCard({project}) {
-  console.log("🚀 ~ ProjectCard ~ project:", project)
   return (
     <div
       className="max-w-[550px] max-h-[520px] transform transition duration-300 hover:scale-105 relative"

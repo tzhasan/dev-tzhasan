@@ -1,8 +1,16 @@
 import React from 'react'
 import Underline from '../shared-component/underline';
 import SocialConnect from '../shared-component/socialConnect';
+import Button from '../shared-component/button';
 
 export default function Contact() {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const name = event.target.name.value;
+    const email = event.target.email.value;
+    const message = event.target.message.value;
+    console.log("🚀 ~ handleSubmit ~ name:", name,email,message)
+  }
   return (
     <div className="bg-white dark:bg-darkmode py-5 md:py-10">
       <div className="primary-width  ">
@@ -18,20 +26,43 @@ export default function Contact() {
               <p className="dark">100 Main St, Blacktown NSW 2148, Australia</p>
               <p className="dark">support@bold.com, info@youremail.com</p>
               <p className="dark">+256-4516-556, +(257) 56812749</p>
-              <SocialConnect/>
+              <SocialConnect />
             </div>
           </div>
           <div className="w-full md:w-4/6 ">
             {" "}
-            <div>
-              <form action="">
+            <div className="relative  pb-14">
+              <form onSubmit={handleSubmit} action="">
                 <div>
-                  <div className=''>
-                  <input type="name" className='bg-white dark:bg-darkmode focus:border-b-1 focus:border-yellow-300 border-b-2 border-yellow-400 focus:outline-none' placeholder='Name here*'/>
+                  <div className="flex flex-col md:flex-row gap-5">
+                    <input
+                      name='name'
+                      type="text"
+                      className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
+                      placeholder="Name here*"
+                    />
+                    <input
+                      name='email'
+                      type="email"
+                      className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
+                      placeholder="Email here*"
+                    />
                   </div>
+                  <textarea
+                    name='message'
+                    type="text"
+                    className="text-black dark:text-white bg-white dark:bg-darkmode w-full h-32 pt-10 focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
+                    placeholder="Message here*"
+                  />
                 </div>
-                {/* <textarea name="message"></textarea> */}
-                <button type='submit'>Submit</button>
+                <div className="absolute bottom-0 right-0">
+                  <Button
+                    type={"submit"}
+                    onSubmit={handleSubmit}
+                    text={"Send Message"}
+                    loading={false}
+                  />
+                </div>
               </form>
             </div>
           </div>
