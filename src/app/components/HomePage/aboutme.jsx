@@ -11,11 +11,12 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import Link from 'next/link';
 import Skills from './skills';
+import SocialConnect from '../shared-component/socialConnect';
 export default function AboutMe() {
   return (
-    <div className="bg-white dark:bg-darkmode">
-      <div className="pt-[2%] pb-[1%] primary-width  ">
-        <div className="flex flex-col-reverse md:flex-row items-center gap-5 md:gap-0 ">
+    <div className="bg-white dark:bg-darkmode ">
+      <div className="pt-[2%] pb-[1%] primary-width ">
+        <div className="flex flex-col-reverse md:flex-row items-center gap-5 md:gap-0 pb-20 md:pb-32">
           <div className="w-60 sm:w-60 md:w-80 relative">
             {/* Image */}
             <Image
@@ -29,9 +30,9 @@ export default function AboutMe() {
           </div>
           <div className="md:w-1/2 w-full md:pl-10 ml-auto space-y-5">
             {/* Text */}
-            <div>
+            <div className="pb-10">
               <h1
-                className="md:text-2xl text-xl  dark"
+                className="md:text-4xl text-3xl  dark"
                 style={{ fontWeight: 900 }}
               >
                 About Me
@@ -52,33 +53,11 @@ export default function AboutMe() {
               be sitting up there at your desk, talking down at your
               subordinates.
             </p>
-            <div className="flex items-center gap-5">
-              <h6 className="font-bold dark">Share:</h6>
-              <div className="flex items-center gap-4">
-                {/* Need to use array of links[0] to make it dynamic  */}
-                <Link href={""}>
-                  <FaFacebook className="dark" />
-                </Link>
-                <Link href={""}>
-                  <FaLinkedin className="dark" />
-                </Link>
-                <Link href={""}>
-                  <FaXTwitter className="dark" />
-                </Link>
-                <Link href={""}>
-                  <FaGithub className="dark" />
-                </Link>
-                <Link href={""}>
-                  <FaYoutube className="dark" />
-                </Link>
-                <Link href={""}>
-                  <FaInstagram className="dark" />
-                </Link>
-              </div>
-            </div>
+            <SocialConnect/>
           </div>
         </div>
-        <div className="my-[10%]">
+        <div className="">
+          
           <Skills />
         </div>
       </div>

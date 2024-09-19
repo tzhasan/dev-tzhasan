@@ -16,11 +16,17 @@
 .dark{
 @apply text-zinc-800 dark:text-white
 }
+.light{
+@apply text-white dark:text-zinc-800
+}
 .darkdiv{
 @apply bg-zinc-800 dark:bg-white
 }
+.lightdiv{
+@apply bg-white dark:bg-zinc-800
+}
 .softdark{
- @apply text-["#414141"] dark:text-white
+ @apply text-["#a1a1aa"] dark:text-white
 }
  /* font-family: "Foldit", sans-serif;
   font-optical-sizing: auto;

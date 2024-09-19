@@ -14,6 +14,7 @@ module.exports = {
       },
       colors: {
         primary_black: "#1f1f1f",
+        soft_black: "#a1a1aa",
         white: "white",
         wave: "#f3f4f5",
         topnav: "#262626",
@@ -21,5 +22,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"),
+  ],
 };
