@@ -1,4 +1,6 @@
 import "./globals.css";
+import AuthProvider from "./provider/authProvider";
+import MenubarProvider from "./provider/menubarProvider";
 import ThemeProvider from "./provider/themeProvider";
 
 export const metadata = {
@@ -10,7 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="font-primary ">
-        <ThemeProvider>{children}</ThemeProvider>
+        <AuthProvider>
+          <MenubarProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </MenubarProvider>
+        </AuthProvider>
       </body>
     </html>
   );

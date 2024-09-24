@@ -12,6 +12,7 @@ export default function Projects() {
     <div className="w-full  bg-white dark:bg-darkmode">
       <Wavedown />
       <div
+        id="projects"
         className="bg-wave dark:bg-primary_black pb-3
       "
       >
@@ -28,7 +29,7 @@ export default function Projects() {
             </div>
             <div>
               {/*  */}
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5 ">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5 ">
                 {projects.map((project, index) => {
                   return <ProjectCard key={index} project={project} />;
                 })}

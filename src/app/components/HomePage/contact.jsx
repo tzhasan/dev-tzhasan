@@ -12,7 +12,7 @@ export default function Contact() {
     console.log("🚀 ~ handleSubmit ~ name:", name,email,message)
   }
   return (
-    <div className="bg-white dark:bg-darkmode py-5 md:py-10">
+    <div id='contact' className="bg-white dark:bg-darkmode py-5 md:py-10">
       <div className="primary-width  ">
         <div className="mb-5 pb-10">
           <h1 className="md:text-4xl text-3xl dark" style={{ fontWeight: 900 }}>
@@ -60,7 +60,8 @@ export default function Contact() {
                     type={"submit"}
                     onSubmit={handleSubmit}
                     text={"Send Message"}
-                    loading={false}
+                    loading={true}
+
                   />
                 </div>
               </form>

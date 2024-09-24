@@ -6,7 +6,7 @@ export default function Banner() {
   const { isChecked, setisChecked } = useContext(themeProvider);
 
   return (
-    <div className="bg-primary_black pt-[2%] ">
+    <div className="bg-primary_black pt-[75px] " id='banner'>
       <div className="primary-width flex flex-col md:flex-row justify-between items-center gap-5">
         <div className="md:space-y-3 space-y-1 mr-auto md:mx-auto">
           <h1

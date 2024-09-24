@@ -4,6 +4,7 @@ import Banner from "./banner";
 import AboutMe from "./aboutme";
 import Projects from "./projects";
 import Contact from "./contact";
+import Footer from "../shared-component/footer";
 
 export default function HomePage() {
   return (
@@ -12,6 +13,7 @@ export default function HomePage() {
       <AboutMe />
       <Projects />
       <Contact />
+      <Footer/>
     </div>
   );
 }
