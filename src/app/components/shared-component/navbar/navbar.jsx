@@ -8,13 +8,13 @@ import Menulinks from "./menulinks";
 import TopNav from "../topNav";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { data } from "../../../../../public/data";
 
 export default function Navbar() {
-  const data = useSession()
+  const user = useSession()
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -47,9 +47,13 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             {/* Logo */}
             <h1 className="font-logo text-white text-xl sm:text-2xl md:text-4xl font-bold">
-              Tz-Hasan
+              {data ? (
+                data?.profile?.logo
+              ) : (
+                <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
+              )}
             </h1>
-            {data?.status === "authenticated" && (
+            {user?.status === "authenticated" && (
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             )}
           </div>

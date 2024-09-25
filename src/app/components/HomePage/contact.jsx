@@ -2,8 +2,10 @@ import React from 'react'
 import Underline from '../shared-component/underline';
 import SocialConnect from '../shared-component/socialConnect';
 import Button from '../shared-component/button';
+import { data } from '../../../../public/data';
 
 export default function Contact() {
+  const {profile} = data
   const handleSubmit = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -12,7 +14,7 @@ export default function Contact() {
     console.log("🚀 ~ handleSubmit ~ name:", name,email,message)
   }
   return (
-    <div id='contact' className="bg-white dark:bg-darkmode py-5 md:py-10">
+    <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
       <div className="primary-width  ">
         <div className="mb-5 pb-10">
           <h1 className="md:text-4xl text-3xl dark" style={{ fontWeight: 900 }}>
@@ -23,9 +25,23 @@ export default function Contact() {
         <div className="flex flex-col-reverse md:flex-row  gap-5">
           <div className="w-full md:w-2/6 ">
             <div className="space-y-4">
-              <p className="dark">100 Main St, Blacktown NSW 2148, Australia</p>
-              <p className="dark">support@bold.com, info@youremail.com</p>
-              <p className="dark">+256-4516-556, +(257) 56812749</p>
+              <p className="dark">{profile.address}</p>
+              <div className="flex gap-2">
+                {data &&
+                  data?.profile?.email.map((e, index) => (
+                    <p className="dark" key={index}>
+                      {e}
+                    </p>
+                  ))}
+              </div>
+              <div className="flex gap-2">
+                {data &&
+                  data?.profile?.phone?.map((p, index) => (
+                    <p className="dark" key={index}>
+                      {p}
+                    </p>
+                  ))}
+              </div>
               <SocialConnect />
             </div>
           </div>
@@ -36,20 +52,20 @@ export default function Contact() {
                 <div>
                   <div className="flex flex-col md:flex-row gap-5">
                     <input
-                      name='name'
+                      name="name"
                       type="text"
                       className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
                       placeholder="Name here*"
                     />
                     <input
-                      name='email'
+                      name="email"
                       type="email"
                       className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
                       placeholder="Email here*"
                     />
                   </div>
                   <textarea
-                    name='message'
+                    name="message"
                     type="text"
                     className="text-black dark:text-white bg-white dark:bg-darkmode w-full h-32 pt-10 focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
                     placeholder="Message here*"
@@ -61,7 +77,6 @@ export default function Contact() {
                     onSubmit={handleSubmit}
                     text={"Send Message"}
                     loading={true}
-
                   />
                 </div>
               </form>

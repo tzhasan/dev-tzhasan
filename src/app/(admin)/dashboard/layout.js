@@ -25,5 +25,4 @@ export default function layout({ children }) {
 const links = [
   {title:"Profile", href:"/dashboard/profile"},
   {title:"Settings", href:"/dashboard/settings"},
-  {title:"Chart", href:"/dashboard/chart"},
 ]

@@ -8,6 +8,14 @@ export default function page() {
   const [Loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
+     toast("Generating User and New Profile", {
+       icon: "❗",
+       style: {
+         borderRadius: "10px",
+         background: "#333",
+         color: "#fff",
+       },
+     });
     event.preventDefault();
     setLoading(true);
     const newUser = {

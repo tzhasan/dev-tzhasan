@@ -1,13 +1,12 @@
 "use client";
-import Image from "next/image";
 import React from "react";
 import Underline from "../shared-component/underline.jsx";
-import { projects } from "../../../../public/projects.js";
 import Waveup from "../../../../public/assets/icons/waveup.jsx";
-import Link from "next/link";
 import Wavedown from "../../../../public/assets/icons/wavedown.js";
 import ProjectCard from "../shared-component/projectCard.jsx";
+import { data } from "../../../../public/data.js";
 export default function Projects() {
+  const {projects} = data
   return (
     <div className="w-full  bg-white dark:bg-darkmode">
       <Wavedown />
@@ -29,10 +28,15 @@ export default function Projects() {
             </div>
             <div>
               {/*  */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5 ">
-                {projects.map((project, index) => {
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5">
+                {
+                  data? projects.map((project, index) => {
                   return <ProjectCard key={index} project={project} />;
-                })}
+                }):
+                (projectsSkeleton.map((project, index) => {
+                  return <div className="skeleton h-[30vh] " key={index}></div>;
+                }))
+               }
               </div>
               {/*  */}
             </div>
@@ -43,3 +47,6 @@ export default function Projects() {
     </div>
   );
 }
+
+
+export const projectsSkeleton = [1,2,3,4,5,6];
