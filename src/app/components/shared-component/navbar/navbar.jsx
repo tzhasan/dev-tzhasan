@@ -1,7 +1,7 @@
 "use client";
 import ThemeButton from "./themeButton";
 import NavLinks from "./navLinks";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MenuBarContext } from "@/app/provider/menubarProvider";
 import Image from "next/image";
 import Menulinks from "./menulinks";
@@ -40,7 +40,7 @@ export default function Navbar() {
       <TopNav />
       <div
         className={`bg-primary_black ${
-          isScrolled ? "pt-3 pb-3" : "pt-7 pb-7"
+          isScrolled ? "py-3" : "pt-7 pb-7"
         } transition-all duration-500`}
       >
         <div className="flex items-center justify-between primary-width bg-primary_black relative ">
@@ -102,14 +102,25 @@ export default function Navbar() {
               </div>
 
               <div
-                className={`flex flex-col gap-5 absolute   right-0 top-10   md:hidden
+                
+                className={`flex flex-col gap-5 absolute   right-0 top-14   md:hidden
           ${menuBar ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}
-          transition-all duration-700 ease-out`}
+          transition-all duration-500 ease-in-out `}
               >
                 {menuBar &&
                   items.map((item, index) => (
                     <Menulinks item={item} index={index} />
                   ))}
+                <div className="transition duration-500 ease-in-out">
+                  <Link
+                    scroll={true}
+                    href={"./dashboard/profile"}
+                    className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit"
+                    style={{ fontWeight: 500 }}
+                  >
+                    <h6 className="text-sm font-bold">DashBoard</h6>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

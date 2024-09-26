@@ -1,14 +1,21 @@
-import Link from 'next/link';
-import React from 'react'
+import { MenuBarContext } from '@/app/provider/menubarProvider';
+import React, { useContext } from 'react'
+import { Link } from 'react-scroll';
 
-export default function Menulinks({item,index}) {
+export default function Menulinks({ item, index }) {
+  const {setMenuBar} = useContext(MenuBarContext)
   return (
-  
-        <div className=' text-right'>
-          <Link href={item.path} className="text-white">{item.title}</Link>
-        </div>
-      
-    
+    <Link
+      onClick={() => setMenuBar(false)}
+      scroll={true}
+      key={index}
+      to={item.path}
+      offset={-200}
+      className=" text-black  py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit"
+      style={{ fontWeight: 500 }}
+    >
+      <h6 className="text-sm font-bold">{item.title}</h6>
+    </Link>
   );
 }
 {

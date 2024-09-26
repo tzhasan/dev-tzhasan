@@ -47,6 +47,4 @@ export default function Projects() {
     </div>
   );
 }
-
-
 export const projectsSkeleton = [1,2,3,4,5,6];

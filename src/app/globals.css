@@ -29,4 +29,7 @@ html {
 .softdark{
  @apply text-["#a1a1aa"] dark:text-white
 }
+.dashboard-input{
+ @apply input input-bordered border-zinc-300 rounded-sm w-full bg-white placeholder-gray-400 text-black
+}
 
