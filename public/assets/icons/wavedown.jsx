@@ -1,6 +1,6 @@
 "use client"
-import { themeProvider } from '@/app/provider/themeProvider';
 import React, { useContext } from 'react'
+import { themeProvider } from '@/app/provider/themeProvider';
 
 export default function Wavedown() {
   const { isChecked } = useContext(themeProvider);

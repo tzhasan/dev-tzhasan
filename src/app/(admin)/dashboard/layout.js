@@ -14,6 +14,7 @@ export default function layout({ children }) {
     <div className=" bg-primary_black w-full ">
       <div className="block md:hidden fixed w-full">
         <DashboardNav />
+        
       </div>
       <div className="flex bg-primary_black">
         <div className="md:w-2/12 bg-primary_black hidden md:block">

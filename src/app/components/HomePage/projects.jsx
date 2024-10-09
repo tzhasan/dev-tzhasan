@@ -2,7 +2,7 @@
 import React from "react";
 import Underline from "../shared-component/underline.jsx";
 import Waveup from "../../../../public/assets/icons/waveup.jsx";
-import Wavedown from "../../../../public/assets/icons/wavedown.js";
+import Wavedown from "../../../../public/assets/icons/wavedown.jsx";
 import ProjectCard from "../shared-component/projectCard.jsx";
 import { data } from "../../../../public/data.js";
 export default function Projects() {
