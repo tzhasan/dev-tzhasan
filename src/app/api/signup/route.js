@@ -16,8 +16,10 @@ export const POST = async (request) => {
     // 
     const initialProfileData  = await profilesCollections.insertOne({...data,email: newUser.email})
     // 
-    const hashPassword = bcrypt.hashSync(newUser.password, 20);
-    const response = await userCollections.insertOne({ ...newUser, password: hashPassword })
+    // const hashPassword = bcrypt.hashSync(newUser?.password, 20);
+    const response = await userCollections.insertOne({ ...newUser, password: newUser?.password })
+    // const hashPassword = bcrypt.hashSync(newUser.password, 20);
+    // const response = await userCollections.insertOne({ ...newUser, password: hashPassword })
      if (response && initialProfileData) {
        return NextResponse.json(
          { message: "User and Profile successfully created" },

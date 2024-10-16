@@ -4,6 +4,7 @@ import { connectDb } from "@/lib/connenctDb";
 import NextAuth from "next-auth/next";
 const handler = NextAuth({
   session: {
+    secret: process.env.AUTH_SECRET,
     strategy: "jwt",
     maxAge: 3600,
   },
@@ -25,13 +26,17 @@ const handler = NextAuth({
         if (!currentUser) {
           return null;
         }
-        const passwordMatching = bcrypt.compareSync(
-          password,
-          currentUser.password
-        );
-        if (!passwordMatching) {
+        
+        // const passwordMatching = await bcrypt.compareSync(
+        //   password,
+        //   currentUser.password
+        // );
+        if (currentUser.password !== password) {
           return null;
         }
+        // if (!passwordMatching) {
+        //   return null;
+        // }
         return currentUser;
       },
     }),

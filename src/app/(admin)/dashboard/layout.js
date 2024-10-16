@@ -56,5 +56,6 @@ export default function layout({ children }) {
 const items = [
   { title: "Profile", href: "/dashboard/profile" },
   { title: "Settings", href: "/dashboard/settings" },
+  { title: "Sign In", href: "/signin" },
   { title: "Back to Home", href: "/" },
 ];

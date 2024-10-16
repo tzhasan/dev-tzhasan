@@ -28,9 +28,9 @@ export default function DashboardNav() {
       </div>
       <div className="block md:hidden" onClick={() => setMenuBar(!menuBar)}>
         {menuBar ? (
-          <Image src={"/assets/icons/close.svg"} width={20} height={20} />
+          <Image src={"/assets/icons/close.svg"} width={20} height={20} alt='' />
         ) : (
-          <Image src={"/assets/icons/menu.svg"} width={20} height={20} />
+          <Image src={"/assets/icons/menu.svg"} width={20} height={20} alt='' />
         )}
       </div>
 

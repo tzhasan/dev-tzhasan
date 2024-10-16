@@ -5,7 +5,7 @@ import Underline from '../shared-component/underline';
 import Skills from './skills';
 import SocialConnect from '../shared-component/socialConnect';
 import { data } from '../../../../public/data';
-export default function AboutMe() {
+export default function AboutMe({about_me,skills,social_links}) {
   return (
     <div id="about-me" className="bg-white dark:bg-darkmode ">
       <div className="pt-[2%] pb-[1%] primary-width ">
@@ -14,7 +14,7 @@ export default function AboutMe() {
             <div className="w-60 sm:w-60 md:w-80 relative">
               {/* Image */}
               <Image
-                src={data?.about_me?.img}
+                src={about_me?.img}
                 width={350}
                 height={350}
                 alt="About me"
@@ -41,15 +41,15 @@ export default function AboutMe() {
               <Underline />
             </div>
             {data ? (
-              <p className="dark">{data?.about_me?.description}</p>
+              <p className="dark">{about_me?.description}</p>
             ) : (
               <span className="loading loading-dots loading-md bg-black p-2 dark:bg-white"></span>
             )}
-            <SocialConnect />
+            <SocialConnect social_links={ social_links} />
           </div>
         </div>
         <div className="">
-          <Skills />
+          <Skills skills={ skills } />
         </div>
       </div>
     </div>

@@ -82,7 +82,7 @@ export default function page() {
           </div>
           <h1 className="text-soft_black">
             Already have an account? 
-            <Link href={"/admin/signin"} className="text-blue-500 ml-2">
+            <Link href={"/signin"} className="text-blue-500 ml-2">
               Sign In
             </Link>
           </h1>

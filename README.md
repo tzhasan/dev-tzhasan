@@ -37,4 +37,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 
 About Project API⬇️
-Get Full Profile by email (s@gmail.com) => /api/getprofile
+Get Full Profile by user (s@gmail.com) => /api/getprofile
+Get Full Profile by email (s@gmail.com) => /need to make

@@ -5,31 +5,40 @@ import Image from "next/image";
 import ProjectAdd from "./component/projectAdd";
 import Button from "@/app/components/shared-component/button";
 import { getFullProfile } from "@/app/utils/dataFetch";
+import { useSession } from "next-auth/react";
 export default function Profile() {
+const currentSession = useSession()
   const [fullProfile, setFullProfile] = useState(null);
+  const [profileId, setProfileId] = useState('')
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [skills, setSkills] = useState([{ title: "", details: "" }]);
   const [projects, setProjects] = useState([{ title: '', link: '', details: '', img: '' }]);
-
+  
    useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const data = await getFullProfile();
-        setFullProfile(data.result); 
-         setImage1(data?.result?.profile?.img || "");
-        setImage2(data?.result?.about_me?.img || "");
-        setSkills(data?.result?.skills || []);
-        setProjects(data?.result?.projects || []);
+        if (currentSession?.status === "authenticated" && currentSession?.data?.user?.email) {
+          const data = await getFullProfile(currentSession?.data?.user?.email);
+          setFullProfile(data.result); 
+          setImage1(data?.result?.profile?.img || "");
+          setImage2(data?.result?.about_me?.img || "");
+          setSkills(data?.result?.skills || []);
+          setProjects(data?.result?.projects || []);
+          setProfileId(data?.result?._id); 
+          
+        }
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
     fetchProfile();
-   }, []); 
+   }, [currentSession?.status,currentSession?.data?.user?.email]); 
 
   useEffect(() => {
     console.log("🚀 ~ Profile ~ profile:", fullProfile);
+    console.log("🚀 ~ Profile ~ profileId: str-", profileId?.toString());
+    console.log("🚀 ~ Profile ~ profileId:", profileId);
   }, [fullProfile]);
 
   
@@ -119,20 +128,20 @@ export default function Profile() {
   };
   // handle image 🖼️ Upload ⬆️
 
-   const handleSubmit = (event) => {
-    event.preventDefault();
-    // Collect other form data (no changes)
-    const profile = {
+   const handleSubmit = async (event) => {
+  event.preventDefault();
+  
+  // Creating the profile object to update
+  const newProfile = {
+    profile: {
       logo: event.target.logo.value,
       name: event.target.name.value,
       profession: event.target.profession.value,
-      About_Me: event.target.description.value,
+      img: image1,  // From state
       address: event.target.address.value,
       email: event.target.email.value.split(/[;,]/).map((e) => e.trim()),
       phone: event.target.phone.value.split(/[;,]/).map((p) => p.trim()),
-      bannerImage: image1,
-      ProfileImage: image2,
-      socialLinks: [
+      social_links: [
         event.target.facebook.value,
         event.target.linkedin.value,
         event.target.x.value,
@@ -140,12 +149,38 @@ export default function Profile() {
         event.target.youtube.value,
         event.target.instagram.value,
       ],
-      skills,  // Now skills include edits
-      projects,
-    };
-    console.log("🚀 ~ handleSubmit ~ profile:", profile);
-    // Save the profile object to the backend
+      copyright: event.target.copyright.value,
+    },
+    about_me: {
+      img: image2,  // From state
+      description: event.target.description.value,
+    },
+    skills,  // Should come from state or handle these values separately
+    projects  // Should come from state or handle these values separately
   };
+
+  try {
+    const resp = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/profile/${profileId}`,  // Pass the profile ID
+      {
+        method: "PATCH",
+        body: JSON.stringify(newProfile),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    console.log("🚀 ~ handleSubmit ~ resp:", resp);
+    
+    if (resp.status === 200) {
+      alert("Successfully Updated");
+    } else {
+      const errorData = await resp.json();
+      console.error("Update failed:", errorData);
+    }
+  } catch (error) {
+    console.error("Error during the update:", error);
+  }
+
+};
 
   return (
     <div className="bg-white">
@@ -347,42 +382,42 @@ export default function Profile() {
               <h6 className="text-md text-black font-bold">Social Links</h6>
               <div className="grid grid-cols-2 gap-1">
                 <input
-                  value={fullProfile?.profile?.social_links[0]} 
+                  defaultValue={fullProfile?.profile?.social_links[0]} 
                   name="facebook"
                   type="text"
                   placeholder="Facebook Link"
                   className="dashboard-input"
                 />
                 <input
-                  value={fullProfile?.profile?.social_links[1]} 
+                  defaultValue={fullProfile?.profile?.social_links[1]} 
                   name="linkedin"
                   type="text"
                   placeholder="linkedIn Link"
                   className="dashboard-input"
                 />
                 <input
-                  value={fullProfile?.profile?.social_links[2]} 
+                  defaultValue={fullProfile?.profile?.social_links[2]} 
                   name="x"
                   type="text"
                   placeholder="X Link"
                   className="dashboard-input"
                 />
                 <input
-                  value={fullProfile?.profile?.social_links[3]} 
+                  defaultValue={fullProfile?.profile?.social_links[3]} 
                   name="github"
                   type="text"
                   placeholder="Github Link"
                   className="dashboard-input"
                 />
                 <input
-                  value={fullProfile?.profile?.social_links[4]} 
+                  defaultValue={fullProfile?.profile?.social_links[4]} 
                   name="youtube"
                   type="text"
                   placeholder="Youtube Link"
                   className="dashboard-input"
                 />
                 <input
-                  value={fullProfile?.profile?.social_links[5]} 
+                  defaultValue={fullProfile?.profile?.social_links[5]} 
                   name="instagram"
                   type="text"
                   placeholder="Instagram Link"

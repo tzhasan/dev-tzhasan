@@ -29,9 +29,8 @@ export default function page() {
       if (respns.status === 200) {
         toast.success("Sign In Successfully!");
         setLoading(false);
-        console.log("🚀 ~ page ~ session:", session);
         event.target.reset();
-        router.push("/");
+        router.push("/dashboard/profile");
       }
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error);
@@ -68,8 +67,8 @@ export default function page() {
           </div>
 
           <h1 className="text-soft_black">
-            Don't have an account?{" "}
-            <Link href={"/admin/signup"} className="text-blue-500 ml-2">
+            {"Don't have an account?"}
+            <Link href={"/signup"} className="text-blue-500 ml-2">
               Sign Up
             </Link>
           </h1>

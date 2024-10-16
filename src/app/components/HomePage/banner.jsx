@@ -3,7 +3,7 @@ import Image from 'next/image';
 import React, { useContext } from 'react'
 import { data } from '../../../../public/data';
 
-export default function Banner() {
+export default function Banner({profile}) {
   const { isChecked, setisChecked } = useContext(themeProvider);
   return (
     <div className="bg-primary_black pt-[75px] " id="banner">
@@ -14,7 +14,7 @@ export default function Banner() {
             style={{ fontWeight: 200 }}
           >
             {data ? (
-              "I'M" + " " + data?.profile?.name
+              "I'M" + " " + profile?.name
             ) : (
               <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
             )}
@@ -24,7 +24,7 @@ export default function Banner() {
             style={{ fontWeight: 200, letterSpacing: 5 }}
           >
             {data ? (
-              data?.profile?.profession
+              profile?.profession
             ) : (
               <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
             )}
@@ -34,7 +34,7 @@ export default function Banner() {
           {/* IMAGE */}
           {data ? (
             <Image
-              src={data?.profile?.img}
+              src={profile?.img}
               width={500}
               height={500}
               alt="profile Image"

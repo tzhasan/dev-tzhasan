@@ -61,7 +61,7 @@ export default function Navbar() {
             {/* Navmenu */}
 
             {items.map((item, index) => (
-              <NavLinks item={item} index={index} />
+              <NavLinks key={index} item={item} index={index} />
             ))}
             <div>
               <Link
@@ -86,6 +86,7 @@ export default function Navbar() {
               >
                 {menuBar ? (
                   <Image
+                  alt=""
                     src={"/assets/icons/close.svg"}
                     width={20}
                     height={20}
@@ -93,6 +94,7 @@ export default function Navbar() {
                   />
                 ) : (
                   <Image
+                  alt=""
                     src={"/assets/icons/menu.svg"}
                     width={20}
                     height={20}
@@ -109,7 +111,7 @@ export default function Navbar() {
               >
                 {menuBar &&
                   items.map((item, index) => (
-                    <Menulinks item={item} index={index} />
+                    <Menulinks key={index} item={item} index={index} />
                   ))}
                 <div className="transition duration-500 ease-in-out">
                   <Link
