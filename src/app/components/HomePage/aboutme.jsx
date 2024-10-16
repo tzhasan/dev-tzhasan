@@ -1,16 +1,14 @@
 import Image from 'next/image'
 import React from 'react'
 import Underline from '../shared-component/underline';
-
 import Skills from './skills';
 import SocialConnect from '../shared-component/socialConnect';
-import { data } from '../../../../public/data';
 export default function AboutMe({about_me,skills,social_links}) {
   return (
     <div id="about-me" className="bg-white dark:bg-darkmode ">
       <div className="pt-[2%] pb-[1%] primary-width ">
         <div className="flex flex-col-reverse md:flex-row items-center gap-5 md:gap-0 pb-20 md:pb-32">
-          {data ? (
+          {about_me ? (
             <div className="w-60 sm:w-60 md:w-80 relative">
               {/* Image */}
               <Image
@@ -40,7 +38,7 @@ export default function AboutMe({about_me,skills,social_links}) {
               </h1>
               <Underline />
             </div>
-            {data ? (
+            {about_me ? (
               <p className="dark">{about_me?.description}</p>
             ) : (
               <span className="loading loading-dots loading-md bg-black p-2 dark:bg-white"></span>

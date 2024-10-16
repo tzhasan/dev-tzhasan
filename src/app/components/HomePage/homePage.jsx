@@ -50,14 +50,14 @@ export default function HomePage() {
   if (!data) {
     return <div>No profile data available</div>;
   }
- 
+ console.log(data?.profile?.social_links)
   return (
     <div>
       <Banner profile={ data?.profile} />
       <AboutMe about_me={data?.about_me } skills={data?.skills} social_links={data?.profile?.social_links} />
-      <Projects />
-      <Contact />
-      <Footer/>
+      <Projects projects={data?.projects} />
+      <Contact profile={ data?.profile} social_links={data?.profile?.social_links}/>
+      <Footer profile={ data?.profile}/>
     </div>
   );
 }

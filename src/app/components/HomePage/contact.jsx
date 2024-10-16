@@ -2,10 +2,10 @@ import React from 'react'
 import Underline from '../shared-component/underline';
 import SocialConnect from '../shared-component/socialConnect';
 import Button from '../shared-component/button';
-import { data } from '../../../../public/data';
 
-export default function Contact() {
-  const {profile} = data
+
+export default function Contact({profile,social_links}) {
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     const name = event.target.name.value;
@@ -27,22 +27,22 @@ export default function Contact() {
             <div className="space-y-4">
               <p className="dark">{profile.address}</p>
               <div className="flex gap-2">
-                {data &&
-                  data?.profile?.email.map((e, index) => (
+                {profile &&
+                  profile?.email.map((e, index) => (
                     <p className="dark" key={index}>
                       {e}
                     </p>
                   ))}
               </div>
               <div className="flex gap-2">
-                {data &&
-                  data?.profile?.phone?.map((p, index) => (
+                {profile &&
+                  profile?.phone?.map((p, index) => (
                     <p className="dark" key={index}>
                       {p}
                     </p>
                   ))}
               </div>
-              <SocialConnect />
+              <SocialConnect social_links={ social_links} />
             </div>
           </div>
           <div className="w-full md:w-4/6 ">

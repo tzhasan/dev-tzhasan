@@ -1,8 +1,7 @@
 import React from 'react'
-import { data } from '../../../../public/data';
 
-export default function Footer() {
-  const {profile} = data
+export default function Footer({profile}) {
+
   return (
     <div className="bg-gray-200 dark:bg-primary_black">
       <div className="primary-width py-5 bg-gray-200 dark:bg-primary_black">

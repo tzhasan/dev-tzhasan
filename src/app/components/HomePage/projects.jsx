@@ -4,9 +4,8 @@ import Underline from "../shared-component/underline.jsx";
 import Waveup from "../../../../public/assets/icons/waveup.jsx";
 import Wavedown from "../../../../public/assets/icons/wavedown.jsx";
 import ProjectCard from "../shared-component/projectCard.jsx";
-import { data } from "../../../../public/data.js";
-export default function Projects() {
-  const {projects} = data
+export default function Projects({projects}) {
+
   return (
     <div className="w-full  bg-white dark:bg-darkmode">
       <Wavedown />
@@ -30,7 +29,7 @@ export default function Projects() {
               {/*  */}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5">
                 {
-                  data? projects.map((project, index) => {
+                  projects? projects.map((project, index) => {
                   return <ProjectCard key={index} project={project} />;
                 }):
                 (projectsSkeleton.map((project, index) => {

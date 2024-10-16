@@ -1,10 +1,8 @@
 import React from 'react'
 import SkillCard from '../shared-component/skillCard'
 import Underline from '../shared-component/underline';
-import { data } from '../../../../public/data';
 
-export default function Skills() {
-  const {skills} = data
+export default function Skills({skills}) {
   return (
     <div>
       <div className="pb-5 md:pb-5">
@@ -14,7 +12,7 @@ export default function Skills() {
         <Underline />
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {data && skills.map((skill, index) => {
+        {skills && skills.map((skill, index) => {
           const { title, icon, description } = skill;
           return (
             <SkillCard
