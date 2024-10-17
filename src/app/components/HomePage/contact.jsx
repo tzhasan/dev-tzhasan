@@ -25,7 +25,7 @@ export default function Contact({profile,social_links}) {
         <div className="flex flex-col-reverse md:flex-row  gap-5">
           <div className="w-full md:w-2/6 ">
             <div className="space-y-4">
-              <p className="dark">{profile.address}</p>
+              <p className="dark">{profile?.address}</p>
               <div className="flex gap-2">
                 {profile &&
                   profile?.email.map((e, index) => (

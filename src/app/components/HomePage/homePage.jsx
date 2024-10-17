@@ -7,6 +7,7 @@ import Contact from "./contact";
 import Footer from "../shared-component/footer";
 import { useSession } from "next-auth/react";
 import { getDefaultProfile, getFullProfile } from "@/app/utils/dataFetch";
+import Loading from "@/app/loading";
 
 export default function HomePage() {
  const { data: session, status } = useSession();  // Get session data and status
@@ -43,7 +44,7 @@ export default function HomePage() {
 
   // While loading, show a loading indicator
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   // If no data is available (e.g., failed to fetch), show an error or placeholder

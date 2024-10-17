@@ -1,7 +1,6 @@
 import { themeProvider } from '@/app/provider/themeProvider';
 import Image from 'next/image';
 import React, { useContext } from 'react'
-import { data } from '../../../../public/data';
 
 export default function Banner({profile}) {
   const { isChecked, setisChecked } = useContext(themeProvider);
@@ -13,7 +12,7 @@ export default function Banner({profile}) {
             className="lg:text-6xl text-2xl text-white"
             style={{ fontWeight: 200 }}
           >
-            {data ? (
+            {profile ? (
               "I'M" + " " + profile?.name
             ) : (
               <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
@@ -23,7 +22,7 @@ export default function Banner({profile}) {
             className="md:text-2xl text-md text-white "
             style={{ fontWeight: 200, letterSpacing: 5 }}
           >
-            {data ? (
+            {profile ? (
               profile?.profession
             ) : (
               <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
@@ -32,7 +31,7 @@ export default function Banner({profile}) {
         </div>
         <div>
           {/* IMAGE */}
-          {data ? (
+          {profile ? (
             <Image
               src={profile?.img}
               width={500}

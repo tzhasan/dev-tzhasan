@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import "./globals.css";
 import AuthProvider from "./provider/authProvider";
 import MenubarProvider from "./provider/menubarProvider";
@@ -14,7 +15,11 @@ export default function RootLayout({ children }) {
       <body className="font-primary ">
         <AuthProvider>
           <MenubarProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              
+              {children}
+              
+            </ThemeProvider>
           </MenubarProvider>
         </AuthProvider>
       </body>
