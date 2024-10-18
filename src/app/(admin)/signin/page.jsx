@@ -6,7 +6,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 
-export default function page() {
+export default function Page() {
   const [Loading, setLoading] = useState(false);
   const router = useRouter();
   const session = useSession();
@@ -25,7 +25,6 @@ export default function page() {
         redirect: true,
         callbackUrl: path ? path : "/",
       });
-      console.log("🚀 ~ handleSubmit ~ respns:", respns)
       if (respns.status === 200) {
         toast.success("Sign In Successfully!");
         setLoading(false);
@@ -57,15 +56,12 @@ export default function page() {
             className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 p-2 text-sm"
             placeholder="Password here*"
           />
-          <div className="w-1/5">
             <Button
               type={"submit"}
               onSubmit={handleSubmit}
               text={"Sign In"}
               loading={Loading}
             />
-          </div>
-
           <h1 className="text-soft_black">
             {"Don't have an account?"}
             <Link href={"/signup"} className="text-blue-500 ml-2">

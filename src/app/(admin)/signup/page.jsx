@@ -72,14 +72,12 @@ export default function page() {
             className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 p-2 text-sm"
             placeholder="Password here*"
           />
-          <div className="w-1/5">
             <Button
               type={"submit"}
               onSubmit={handleSubmit}
               text={"Sign Up"}
               loading={Loading}
             />
-          </div>
           <h1 className="text-soft_black">
             Already have an account? 
             <Link href={"/signin"} className="text-blue-500 ml-2">

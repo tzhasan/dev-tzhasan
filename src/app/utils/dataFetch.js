@@ -16,3 +16,12 @@ export const getDefaultProfile = async () => {
     console.log(error)
   }
 }
+export const getProjects = async (userEmail) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/projectDetails/${userEmail}`)
+  const projects = await response.json()
+  return projects
+  } catch (error) {
+    console.log(error)
+  }
+}

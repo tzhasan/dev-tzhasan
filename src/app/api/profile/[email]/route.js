@@ -6,7 +6,7 @@ export const GET = async (request, { params }) => {
   const db = await connectDb()
   const profileCollection = await db.collection('profiles')
   try {
-   const result = await profileCollection.findOne({ email: params?.profileId });
+   const result = await profileCollection.findOne({ email: params?.email });
 
      if (result) {
       return NextResponse.json(
@@ -32,13 +32,13 @@ export const PATCH = async (request, { params }) => {
     const updateDoc = await request.json();  // Get the update data from the request body
 
     // Ensure the profile id is in the correct format
-    const profileid = params.profileId;
+    const profileid = params?.email;
 
     // Update the profile using updateOne, since you're updating a single document
     const res = await profileCollection.updateOne(
-      { _id: new ObjectId(profileid) },  // Match by _id
+      { email: params?.email }, // Match by _id
       {
-        $set: { ...updateDoc },  // Set the new fields
+        $set: { ...updateDoc }, // Set the new fields
       }
     );
 

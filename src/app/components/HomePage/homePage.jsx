@@ -51,7 +51,6 @@ export default function HomePage() {
   if (!data) {
     return <div>No profile data available</div>;
   }
- console.log(data?.profile?.social_links)
   return (
     <div>
       <Banner profile={ data?.profile} />

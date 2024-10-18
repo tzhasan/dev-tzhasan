@@ -6,6 +6,7 @@ import ProjectAdd from "./component/projectAdd";
 import Button from "@/app/components/shared-component/button";
 import { getFullProfile } from "@/app/utils/dataFetch";
 import { useSession } from "next-auth/react";
+import toast, { Toaster } from "react-hot-toast";
 export default function Profile() {
 const currentSession = useSession()
   const [fullProfile, setFullProfile] = useState(null);
@@ -35,11 +36,11 @@ const currentSession = useSession()
     fetchProfile();
    }, [currentSession?.status,currentSession?.data?.user?.email]); 
 
-  useEffect(() => {
-    console.log("🚀 ~ Profile ~ profile:", fullProfile);
-    console.log("🚀 ~ Profile ~ profileId: str-", profileId?.toString());
-    console.log("🚀 ~ Profile ~ profileId:", profileId);
-  }, [fullProfile]);
+  // useEffect(() => {
+  //   console.log("🚀 ~ Profile ~ profile:", fullProfile);
+  //   console.log("🚀 ~ Profile ~ profileId: str-", profileId?.toString());
+  //   console.log("🚀 ~ Profile ~ profileId:", profileId);
+  // }, [fullProfile]);
 
   
   // Skills
@@ -67,35 +68,48 @@ const currentSession = useSession()
   // skill end ⬆️
 
   // handle image 🖼️ Upload ⬇️
-  const handleImageChange1 = async (e) => {
-    var file = e.target.files[0];
-    if (file) {
-      const previewUrl = URL.createObjectURL(file); // Create a preview URL
-      setImage1(previewUrl); // Set the preview URL to the state
-    }
+ const handleImageChange1 = async (e) => {
+   var file = e.target.files[0];
+   if (file) {
+     const previewUrl = URL.createObjectURL(file); // Create a preview URL
+     setImage1(previewUrl); // Set the preview URL to the state
+   }
 
-    const formData = new FormData();
-    formData.append("image", file); // 'image' is the expected key for imgbb
+   const formData = new FormData();
+   formData.append("image", file); // 'image' is the expected key for imgbb
 
-    try {
-      const response = await fetch(
-        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+   // Use toast.promise to handle loading, success, and error states
+   toast.promise(
+     // The function that returns the promise (image upload process)
+     fetch(
+       `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
+       {
+         method: "POST",
+         body: formData,
+       }
+     )
+       .then((response) => {
+         if (!response.ok) {
+           throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+         return response.json();
+       })
+       .then((result) => {
+         setImage1(result?.data?.display_url); // Set the uploaded image URL
+         console.log("🚀 ~ handleImageChange1 ~ result:", result);
+       })
+       .catch((error) => {
+         console.error("Error uploading image:", error);
+         throw error; // Re-throw the error for the toast to catch it
+       }),
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const result = await response.json();
-      setImage1(result?.data?.display_url);
-      console.log("🚀 ~ handleImageChange1 ~ result:", result);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
+     {
+       loading: "Uploading image...",
+       success: <b>Banner Image uploaded successfully!</b>,
+       error: <b>Failed to upload image.</b>,
+     }
+   );
+ };
 
   const handleImageChange2 = async (e) => {
     var file = e.target.files[0];
@@ -107,24 +121,37 @@ const currentSession = useSession()
     const formData = new FormData();
     formData.append("image", file); // 'image' is the expected key for imgbb
 
-    try {
-      const response = await fetch(
+    // Use toast.promise to handle loading, success, and error states
+    toast.promise(
+      // The function that returns the promise (image upload process)
+      fetch(
         `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
         {
           method: "POST",
           body: formData,
         }
-      );
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((result) => {
+          setImage2(result?.data?.display_url); // Set the uploaded image URL
+          console.log("🚀 ~ handleImageChange2 ~ result:", result);
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+          throw error; // Re-throw the error for the toast to catch it
+        }),
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      {
+        loading: "Uploading image...",
+        success: <b>Profile Image uploaded successfully!</b>,
+        error: <b>Failed to upload image.</b>,
       }
-      const result = await response.json();
-      setImage2(result?.data?.display_url);
-      console.log("🚀 ~ handleImageChange1 ~ result:", result);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
+    );
   };
   // handle image 🖼️ Upload ⬆️
 
@@ -155,13 +182,13 @@ const currentSession = useSession()
       img: image2,  // From state
       description: event.target.description.value,
     },
-    skills,  // Should come from state or handle these values separately
-    projects  // Should come from state or handle these values separately
+    skills,
+    projects
   };
-
+console.log(currentSession?.data?.user?.email);
   try {
     const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/profile/${profileId}`,  // Pass the profile ID
+      `${process.env.NEXT_PUBLIC_API_URL}/api/profile/${currentSession?.data?.user?.email}`, // Pass the profile ID
       {
         method: "PATCH",
         body: JSON.stringify(newProfile),
@@ -171,25 +198,33 @@ const currentSession = useSession()
     console.log("🚀 ~ handleSubmit ~ resp:", resp);
     
     if (resp.status === 200) {
-      alert("Successfully Updated");
+      toast.success("Updated Successfully!");
     } else {
       const errorData = await resp.json();
       console.error("Update failed:", errorData);
+      toast.success("Update failed:", errorData);
     }
   } catch (error) {
     console.error("Error during the update:", error);
+    toast.success("Error during the update:", error);
   }
 
 };
 
   return (
     <div className="bg-white">
+      <Toaster position="top-center" reverseOrder={false} />
       <form action="" onSubmit={handleSubmit} className="">
         <div className="flex flex-col md:flex-row w-full p-5">
           <div className="w-full md:w-1/2 p-2 md:p-5 space-y-5">
             <label className=" dashboard-input flex items-center gap-2">
               Logo-
-              <input defaultValue={fullProfile?.profile?.logo} name="logo" type="text" placeholder="Logo text" />
+              <input
+                defaultValue={fullProfile?.profile?.logo}
+                name="logo"
+                type="text"
+                placeholder="Logo text"
+              />
             </label>
             <label className=" dashboard-input flex items-center gap-2">
               Name-
@@ -245,7 +280,7 @@ const currentSession = useSession()
             >
               Email Address-
               <input
-                defaultValue={fullProfile?.profile?.email?.join(', ')} 
+                defaultValue={fullProfile?.profile?.email?.join(", ")}
                 name="email"
                 type="text"
                 placeholder="Separated by commas"
@@ -258,7 +293,7 @@ const currentSession = useSession()
             >
               Phone-
               <input
-                defaultValue={fullProfile?.profile?.phone?.join(', ')} 
+                defaultValue={fullProfile?.profile?.phone?.join(", ")}
                 name="phone"
                 type="text"
                 placeholder="Separated by commas"
@@ -271,7 +306,7 @@ const currentSession = useSession()
             >
               Copyright-
               <input
-                defaultValue={fullProfile?.profile?.copyright} 
+                defaultValue={fullProfile?.profile?.copyright}
                 name="copyright"
                 type="text"
                 placeholder="Copyright text here"
@@ -382,42 +417,42 @@ const currentSession = useSession()
               <h6 className="text-md text-black font-bold">Social Links</h6>
               <div className="grid grid-cols-2 gap-1">
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[0]} 
+                  defaultValue={fullProfile?.profile?.social_links[0]}
                   name="facebook"
                   type="text"
                   placeholder="Facebook Link"
                   className="dashboard-input"
                 />
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[1]} 
+                  defaultValue={fullProfile?.profile?.social_links[1]}
                   name="linkedin"
                   type="text"
                   placeholder="linkedIn Link"
                   className="dashboard-input"
                 />
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[2]} 
+                  defaultValue={fullProfile?.profile?.social_links[2]}
                   name="x"
                   type="text"
                   placeholder="X Link"
                   className="dashboard-input"
                 />
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[3]} 
+                  defaultValue={fullProfile?.profile?.social_links[3]}
                   name="github"
                   type="text"
                   placeholder="Github Link"
                   className="dashboard-input"
                 />
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[4]} 
+                  defaultValue={fullProfile?.profile?.social_links[4]}
                   name="youtube"
                   type="text"
                   placeholder="Youtube Link"
                   className="dashboard-input"
                 />
                 <input
-                  defaultValue={fullProfile?.profile?.social_links[5]} 
+                  defaultValue={fullProfile?.profile?.social_links[5]}
                   name="instagram"
                   type="text"
                   placeholder="Instagram Link"
@@ -429,72 +464,9 @@ const currentSession = useSession()
           </div>
         </div>
         <div className="w-full">
-          <Button onSubmit={handleSubmit} text={"Save"} />
+          <Button onSubmit={handleSubmit} text={"Save"} className={'w-full'}/>
         </div>
       </form>
     </div>
   );
 }
-
-
-
-
-
-
-// const handleSubmit = (event) => {
-//     event.preventDefault();
-
-//     // Email and Phone
-//     const emailString = event.target.email.value;
-//     const phoneString = event.target.phone.value;
-//     //
-//     // Social links
-//     const facebookLink = event.target.facebook.value;
-//     const linkedinLink = event.target.linkedin.value;
-//     const xLink = event.target.x.value;
-//     const githubLink = event.target.github.value;
-//     const youtubeLink = event.target.youtube.value;
-//     const instagramLink = event.target.instagram.value;
-//     //
-
-//     const logo = event.target.logo.value;
-//     const name = event.target.name.value;
-//     const profession = event.target.profession.value;
-//     const description = event.target.description.value;
-//     const address = event.target.address.value;
-//     const copyright = event.target.copyright.value;
-//     const emailArray = emailString
-//       .split(/[;,]/)
-//       .map((email) => email.trim())
-//       .filter((email) => email);
-//     const phoneArray = phoneString
-//       .split(/[;,]/)
-//       .map((phone) => phone.trim())
-//       .filter((phone) => phone);
-//     const social_links = [
-//       facebookLink,
-//       linkedinLink,
-//       xLink,
-//       githubLink,
-//       youtubeLink,
-//       instagramLink,
-//     ];
-//     const profile = {
-//       logo: logo,
-//       name: name,
-//       profession: profession,
-//       About_Me: description,
-//       address: address,
-//       email: emailArray,
-//       phone: phoneArray,
-//       copyright: copyright,
-//       bannerImage: image1,
-//       ProfileImage: image2,
-//       socialLinks: social_links,
-//       skills,
-//       projects
-
-
-//     };
-//     console.log("🚀 ~ handleSubmit ~ profile:", profile);
-//   };

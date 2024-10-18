@@ -1,13 +1,13 @@
 import React from 'react'
 
-export default function Button({ text, loading, type, onSubmit, onClick }) {
+export default function Button({ text, loading, type, onSubmit, onClick,className }) {
   return (
      <button
       onClick={onClick}
       onSubmit={onSubmit}
       type={type}
       disabled={loading} // Disable the button when loading
-      className={"bg-topnav dark:bg-gray-300 cursor-pointer flex items-center min-w-36 min-h-10 justify-center hover:bg-black dark:hover:bg-gray-400 transition duration-300 text-white dark:text-primary_black font-semibold"}
+      className={`bg-topnav dark:bg-gray-300 cursor-pointer flex items-center min-w-36 min-h-10 justify-center hover:bg-black dark:hover:bg-gray-400 transition duration-300 text-white dark:text-primary_black font-semibold ${className&&className}`}
     >
       {loading ? (
         <div className="flex items-center justify-center">

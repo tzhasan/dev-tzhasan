@@ -30,7 +30,7 @@ export default function Projects({projects}) {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5">
                 {
                   projects? projects.map((project, index) => {
-                  return <ProjectCard key={index} project={project} />;
+                    return <ProjectCard key={index} project={project} index={ index} />;
                 }):
                 (projectsSkeleton.map((project, index) => {
                   return <div className="skeleton h-[30vh] " key={index}></div>;

@@ -1,20 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
+import emailjs from "@emailjs/browser";
 import Underline from '../shared-component/underline';
 import SocialConnect from '../shared-component/socialConnect';
 import Button from '../shared-component/button';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 export default function Contact({profile,social_links}) {
- 
+  const [loading, setLoading] = useState(false)
+  const [buttonText, setButtonText] = useState('Send Message')
   const handleSubmit = (event) => {
     event.preventDefault();
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const message = event.target.message.value;
-    console.log("🚀 ~ handleSubmit ~ name:", name,email,message)
+    var templateParams = {
+      name: event.target.name.value,
+      email: event.target.email.value,
+      message: event.target.message.value,
+    };
+setLoading(true);
+    toast.promise(
+      emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      ),
+      {
+        loading: "Sending...",
+        success: () => {
+          setLoading(false);
+          setButtonText('Sended')
+          event.target.reset();
+          return <b>Email sent successfully!</b>;
+        },
+        error: () => {
+          setLoading(false);
+          setButtonText("Try Again");
+          return <b>Could not send email. Please try again.</b>;
+        },
+      }
+    );
   }
   return (
     <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="primary-width  ">
         <div className="mb-5 pb-10">
           <h1 className="md:text-4xl text-3xl dark" style={{ fontWeight: 900 }}>
@@ -42,7 +70,7 @@ export default function Contact({profile,social_links}) {
                     </p>
                   ))}
               </div>
-              <SocialConnect social_links={ social_links} />
+              <SocialConnect social_links={social_links} />
             </div>
           </div>
           <div className="w-full md:w-4/6 ">
@@ -75,8 +103,8 @@ export default function Contact({profile,social_links}) {
                   <Button
                     type={"submit"}
                     onSubmit={handleSubmit}
-                    text={"Send Message"}
-                    loading={true}
+                    text={buttonText}
+                    loading={loading}
                   />
                 </div>
               </form>
