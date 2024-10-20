@@ -1,5 +1,4 @@
 import { connectDb } from "@/lib/connenctDb"
-import bcrypt from "bcrypt";
 import { NextResponse } from "next/server"
 import { data } from "../../../../public/data";
 
