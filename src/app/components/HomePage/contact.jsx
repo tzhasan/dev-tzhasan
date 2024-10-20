@@ -1,22 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
-import Underline from '../shared-component/underline';
-import SocialConnect from '../shared-component/socialConnect';
-import Button from '../shared-component/button';
-import toast, { Toaster } from 'react-hot-toast';
+import Underline from "../shared-component/underline";
+import SocialConnect from "../shared-component/socialConnect";
+import Button from "../shared-component/button";
+import toast, { Toaster } from "react-hot-toast";
+export default function Contact({ profile, social_links }) {
+  const [loading, setLoading] = useState(false);
+  const [buttonText, setButtonText] = useState("Send Now");
+  const [localTime, setLocalTime] = useState("");
+  
+ useEffect(() => {
+   const updateTime = () => {
+     const now = new Date();
 
+     // Format both date and time
+     const formattedTime = new Intl.DateTimeFormat(navigator.language, {
+       year: "numeric",
+       month: "long", // Use 'numeric' or '2-digit' for shorter month format
+       day: "numeric",
+       hour: "numeric",
+       minute: "numeric",
+       second: "numeric",
+       hour12: true, // Set to false for 24-hour format
+     }).format(now);
 
-export default function Contact({profile,social_links}) {
-  const [loading, setLoading] = useState(false)
-  const [buttonText, setButtonText] = useState('Send Message')
-  const handleSubmit = (event) => {
+     setLocalTime(formattedTime);
+   };
+
+   // Update time every second
+   const interval = setInterval(updateTime, 1000);
+
+   // Cleanup on component unmount
+   return () => clearInterval(interval);
+ }, []);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     var templateParams = {
       name: event.target.name.value,
       email: event.target.email.value,
       message: event.target.message.value,
+      time: localTime,
     };
-setLoading(true);
+    setLoading(true);
     toast.promise(
       emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
@@ -28,7 +54,7 @@ setLoading(true);
         loading: "Sending...",
         success: () => {
           setLoading(false);
-          setButtonText('Sended')
+          setButtonText("Message Sent");
           event.target.reset();
           return <b>Email sent successfully!</b>;
         },
@@ -39,7 +65,30 @@ setLoading(true);
         },
       }
     );
-  }
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(templateParams),
+        }
+      ); 
+      if (res.status === 200) {
+        // toast.success("Updated Successfully!");
+        console.log(res)
+      } else {
+        const errorData = await res.json();
+        console.error("Message adding failed:", errorData);
+        // toast.success("Update failed:", errorData);
+      }
+    } catch (error) {
+      console.log("🚀 ~ handleSubmit ~ error:", error)
+      
+    }
+  };
   return (
     <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
       <Toaster position="top-center" reverseOrder={false} />
@@ -95,7 +144,7 @@ setLoading(true);
                   <textarea
                     name="message"
                     type="text"
-                    className="text-black dark:text-white bg-white dark:bg-darkmode w-full h-32 pt-10 focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm"
+                    className="text-black dark:text-white bg-white dark:bg-darkmode w-full h-32 pt-10 focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 pb-2 text-sm mt-2"
                     placeholder="Message here*"
                   />
                 </div>

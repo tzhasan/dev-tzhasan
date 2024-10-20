@@ -16,15 +16,26 @@ export default function Page() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+
     const email = event.target.email.value;
     const password = event.target.password.value;
+
     try {
       const respns = await signIn("credentials", {
         email,
         password,
-        redirect: true,
+        redirect: false, // Prevent immediate redirect
         callbackUrl: path ? path : "/",
       });
+
+
+      if (respns?.error) {
+        // Show a toast when there is an error (e.g., User not found)
+        toast.error("User not found");
+        setLoading(false);
+        return;
+      }
+
       if (respns.status === 200) {
         toast.success("Sign In Successfully!");
         setLoading(false);
@@ -33,10 +44,13 @@ export default function Page() {
       }
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error);
+      toast.error("An error occurred during sign in");
+      setLoading(false);
     }
   };
+
   return (
-    <div className="bg-white h-[100vh] flex items-center">
+    <div className="bg-white dark:bg-darkmode h-[100vh] flex items-center">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="primary-width">
         <form
@@ -56,12 +70,12 @@ export default function Page() {
             className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 p-2 text-sm"
             placeholder="Password here*"
           />
-            <Button
-              type={"submit"}
-              onSubmit={handleSubmit}
-              text={"Sign In"}
-              loading={Loading}
-            />
+          <Button
+            type={"submit"}
+            onSubmit={handleSubmit}
+            text={"Sign In"}
+            loading={Loading}
+          />
           <h1 className="text-soft_black">
             {"Don't have an account?"}
             <Link href={"/signup"} className="text-blue-500 ml-2">

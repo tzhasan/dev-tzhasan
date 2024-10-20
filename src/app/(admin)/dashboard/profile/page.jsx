@@ -195,7 +195,6 @@ console.log(currentSession?.data?.user?.email);
         headers: { "Content-Type": "application/json" },
       }
     );
-    console.log("🚀 ~ handleSubmit ~ resp:", resp);
     
     if (resp.status === 200) {
       toast.success("Updated Successfully!");
@@ -212,11 +211,63 @@ console.log(currentSession?.data?.user?.email);
 };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-darkmode">
       <Toaster position="top-center" reverseOrder={false} />
       <form action="" onSubmit={handleSubmit} className="">
         <div className="flex flex-col md:flex-row w-full p-5">
           <div className="w-full md:w-1/2 p-2 md:p-5 space-y-5">
+            <div className="flex gap-5 ">
+              <div className="flex flex-col items-center space-y-2 dark">
+                <div className="border-2 border-dotted border-zinc-300 rounded-xl bg-slate-100 w-32 h-32 p-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange1}
+                    className="hidden"
+                    id="imageUpload1"
+                  />
+                  <label
+                    htmlFor="imageUpload1"
+                    className="cursor-pointer w-full h-full block"
+                  >
+                    <Image
+                      // src={"https://i.ibb.co.com/p0WxN1N/file.png"}
+                      src={image1 ? image1 : "/assets/images/empty.png"}
+                      width={176} // 44 * 4 = 176 px (equivalent to w-44)
+                      height={176} // same as width to ensure it's a square
+                      alt="Banner image"
+                      className="object-cover w-full h-full rounded-xl"
+                    />
+                  </label>
+                </div>
+                <span className="text-sm">Banner Image</span>
+              </div>
+              <div className="flex flex-col items-center space-y-2 dark">
+                <div className="border-2 border-dotted border-zinc-300 rounded-xl bg-slate-100 w-32 h-32 p-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange2}
+                    className="hidden"
+                    id="imageUpload2"
+                  />
+                  <label
+                    htmlFor="imageUpload2"
+                    className="cursor-pointer w-full h-full block"
+                  >
+                    <Image
+                      // src={"https://i.ibb.co.com/p0WxN1N/file.png"}
+                      src={image2 ? image2 : "/assets/images/empty.png"}
+                      width={176} // 44 * 4 = 176 px (equivalent to w-44)
+                      height={176} // same as width to ensure it's a square
+                      alt="Banner image"
+                      className="object-cover w-full h-full rounded-xl"
+                    />
+                  </label>
+                </div>
+                <span className="text-sm">Profile Image</span>
+              </div>
+            </div>
             <label className=" dashboard-input flex items-center gap-2">
               Logo-
               <input
@@ -314,60 +365,8 @@ console.log(currentSession?.data?.user?.email);
               />
             </label>
 
-            <div className="flex gap-5 ">
-              <div className="flex flex-col items-center space-y-2">
-                <div className="border-2 border-dotted border-zinc-300 rounded-xl bg-slate-100 w-44 h-44 p-2">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange1}
-                    className="hidden"
-                    id="imageUpload1"
-                  />
-                  <label
-                    htmlFor="imageUpload1"
-                    className="cursor-pointer w-full h-full block"
-                  >
-                    <Image
-                      // src={"https://i.ibb.co.com/p0WxN1N/file.png"}
-                      src={image1 ? image1 : "/assets/images/empty.png"}
-                      width={176} // 44 * 4 = 176 px (equivalent to w-44)
-                      height={176} // same as width to ensure it's a square
-                      alt="Banner image"
-                      className="object-cover w-full h-full rounded-xl"
-                    />
-                  </label>
-                </div>
-                <span>Upload Banner Image</span>
-              </div>
-              <div className="flex flex-col items-center space-y-2">
-                <div className="border-2 border-dotted border-zinc-300 rounded-xl bg-slate-100 w-44 h-44 p-2">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange2}
-                    className="hidden"
-                    id="imageUpload2"
-                  />
-                  <label
-                    htmlFor="imageUpload2"
-                    className="cursor-pointer w-full h-full block"
-                  >
-                    <Image
-                      // src={"https://i.ibb.co.com/p0WxN1N/file.png"}
-                      src={image2 ? image2 : "/assets/images/empty.png"}
-                      width={176} // 44 * 4 = 176 px (equivalent to w-44)
-                      height={176} // same as width to ensure it's a square
-                      alt="Banner image"
-                      className="object-cover w-full h-full rounded-xl"
-                    />
-                  </label>
-                </div>
-                <span>Upload Profile Image</span>
-              </div>
-            </div>
             <div className=" space-y-5">
-              <h6 className="text-md text-black font-bold">Skills</h6>
+              <h6 className="text-md dark font-bold">Skills</h6>
               <>
                 {skills?.map((skill, index) => (
                   <div
@@ -414,7 +413,7 @@ console.log(currentSession?.data?.user?.email);
           {/* Second Part / right */}
           <div className="w-full md:w-1/2 p-2 md:p-5 space-y-5">
             <div>
-              <h6 className="text-md text-black font-bold">Social Links</h6>
+              <h6 className="text-md dark font-bold">Social Links</h6>
               <div className="grid grid-cols-2 gap-1">
                 <input
                   defaultValue={fullProfile?.profile?.social_links[0]}
@@ -463,8 +462,12 @@ console.log(currentSession?.data?.user?.email);
             <ProjectAdd setProjects={setProjects} projects={projects} />
           </div>
         </div>
-        <div className="w-full">
-          <Button onSubmit={handleSubmit} text={"Save"} className={'w-full'}/>
+        <div className="w-full py-2">
+          <Button
+            onSubmit={handleSubmit}
+            text={"Save"}
+            className={"w-[98%]  mx-auto "}
+          />
         </div>
       </form>
     </div>

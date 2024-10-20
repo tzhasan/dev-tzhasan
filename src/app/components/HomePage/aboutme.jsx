@@ -1,9 +1,11 @@
+"use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Underline from '../shared-component/underline';
 import Skills from './skills';
 import SocialConnect from '../shared-component/socialConnect';
-export default function AboutMe({about_me,skills,social_links}) {
+export default function AboutMe({ about_me, skills, social_links }) {
+  
   return (
     <div id="about-me" className="bg-white dark:bg-darkmode ">
       <div className="pt-[2%] pb-[1%] primary-width ">
@@ -43,11 +45,11 @@ export default function AboutMe({about_me,skills,social_links}) {
             ) : (
               <span className="loading loading-dots loading-md bg-black p-2 dark:bg-white"></span>
             )}
-            <SocialConnect social_links={ social_links} />
+            <SocialConnect social_links={social_links} />
           </div>
         </div>
         <div className="">
-          <Skills skills={ skills } />
+          <Skills skills={skills} />
         </div>
       </div>
     </div>

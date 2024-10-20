@@ -11,12 +11,12 @@ export default function Layout({ children }) {
   const pathname = usePathname();
 
   return (
-    <div className=" bg-primary_black w-full ">
+    <div className=" bg-primary_black w-full  ">
       <div className="block md:hidden fixed w-full">
         <DashboardNav />
       </div>
-      <div className="flex bg-primary_black">
-        <div className="md:w-2/12 bg-primary_black hidden md:block">
+      <div className="grid grid-cols-5 min-h-screen bg-primary_black ">
+        <div className="md:col-span-1  bg-primary_black hidden md:block">
           <div>
             <div className="flex items-center gap-2 pl-2 pt-2 ">
               {/* Logo */}
@@ -42,7 +42,7 @@ export default function Layout({ children }) {
               <Link
                 href={item.href}
                 key={index}
-                className={`py-2 pl-2 border-b ${
+                className={`py-2 pl-2  ${
                   pathname === item.href
                     ? "text-black bg-white"
                     : "text-white bg-zinc-800"
@@ -53,7 +53,7 @@ export default function Layout({ children }) {
             ))}
           </div>
         </div>
-        <div className="md:w-10/12 mt-16 md:mt-0 w-full h-[100vh] bg-white">
+        <div className="col-span-5 md:col-span-4 mt-16 md:mt-0 w-full bg-white">
           {children}
         </div>
       </div>
@@ -63,6 +63,7 @@ export default function Layout({ children }) {
 
 const items = [
   { title: "Profile", href: "/dashboard/profile" },
+  { title: "Messages", href: "/dashboard/messages" },
   { title: "Settings", href: "/dashboard/settings" },
   { title: "Back to Home", href: "/" },
 ];

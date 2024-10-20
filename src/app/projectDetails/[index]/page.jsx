@@ -24,7 +24,7 @@ export default function Page({ params }) {
           `${
             status === "authenticated"
               ? session.user.email
-              : "sohantajbiul210@gmail.com"
+              : process.env.NEXT_PUBLIC_DEFAULT_MAIL
           }`
         );
         setProjects(data?.projects);
@@ -41,7 +41,7 @@ export default function Page({ params }) {
 
   const theProject = projects[projectIndex];
   return (
-    <div className="bg-white h-auto p-10 ">
+    <div className="bg-white dark:bg-darkmode min-h-screen p-10 ">
       {loading ? (
         <div className="flex w-full flex-col gap-7">
           <div className="skeleton h-8 w-3/5 bg-gray-400"></div>

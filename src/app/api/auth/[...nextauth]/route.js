@@ -6,7 +6,7 @@ const handler = NextAuth({
   session: {
     secret: process.env.AUTH_SECRET,
     strategy: "jwt",
-    maxAge: 3600,
+    maxAge: 2592000,
   },
   providers: [
     CredentialProvider({
@@ -26,7 +26,7 @@ const handler = NextAuth({
         if (!currentUser) {
           return null;
         }
-        
+
         // const passwordMatching = await bcrypt.compareSync(
         //   password,
         //   currentUser.password
@@ -41,11 +41,9 @@ const handler = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    
-  },
+  callbacks: {},
   pages: {
-    signIn: '/admin/signin',
-  }
+    signIn: "/admin/signin",
+  },
 });
 export { handler as GET, handler as POST };

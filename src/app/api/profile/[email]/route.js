@@ -1,5 +1,4 @@
 import { connectDb } from "@/lib/connenctDb"
-import { ObjectId } from "mongodb"
 import { NextResponse } from "next/server"
 
 export const GET = async (request, { params }) => {
@@ -25,20 +24,16 @@ export const GET = async (request, { params }) => {
 } 
 
 export const PATCH = async (request, { params }) => {
+  const db = await connectDb();
+  const profileCollection = db.collection('profiles');
   try {
-    const db = await connectDb();
-    const profileCollection = db.collection('profiles');
 
-    const updateDoc = await request.json();  // Get the update data from the request body
+    const updateDoc = await request.json();  
 
-    // Ensure the profile id is in the correct format
-    const profileid = params?.email;
-
-    // Update the profile using updateOne, since you're updating a single document
     const res = await profileCollection.updateOne(
-      { email: params?.email }, // Match by _id
+      { email: params?.email },
       {
-        $set: { ...updateDoc }, // Set the new fields
+        $set: { ...updateDoc },
       }
     );
 

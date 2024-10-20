@@ -8,7 +8,6 @@ import Link from 'next/link';
 
 export default function DashboardNav() {
   const user = useSession();
-  console.log("🚀 ~ DashboardNav ~ user:", user)
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
   const pathname = usePathname();
 
@@ -48,7 +47,7 @@ export default function DashboardNav() {
       </div>
 
       <div
-        className={`flex flex-col gap-5 absolute   top-16 right-5  md:hidden
+        className={`flex flex-col gap-5 absolute   top-[4.5rem] right-5  md:hidden
           ${menuBar ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}
           transition-all duration-500 ease-in-out `}
       >
@@ -77,5 +76,6 @@ export default function DashboardNav() {
 const items = [
   { title: "Profile", href: "/dashboard/profile" },
   { title: "Settings", href: "/dashboard/settings" },
+  { title: "Messages", href: "/dashboard/messages" },
   { title: "Back to Home", href: "/" },
 ];

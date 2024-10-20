@@ -58,7 +58,7 @@ export default function ProjectAdd({setProjects,projects}) {
 
   return (
     <div className="space-y-5">
-      <h6 className="text-md text-black font-bold">Projects</h6>
+      <h6 className="text-md dark font-bold">Projects</h6>
 
       {projects?.map((project, index) => (
         <div key={index} className="flex gap-1 justify-between p-1 bg-zinc-200">
@@ -90,7 +90,7 @@ export default function ProjectAdd({setProjects,projects}) {
                 name="details"
                 value={project.details}
                 onChange={(event) => handleFieldChange(index, event)}
-                className='w-full'
+                className="w-full"
               />
             </label>
 
@@ -112,14 +112,13 @@ export default function ProjectAdd({setProjects,projects}) {
                 className="w-full h-60 object-cover"
               />
             )}
-          <button
-            className="bg-red-500 hover:bg-red-700 mt-5 text-white py-3 rounded-sm text-xs font-bold"
-            onClick={() => deleteProject(index)}
-          >
-            Delete Project
-          </button>
+            <button
+              className="bg-red-500 hover:bg-red-700 mt-5 text-white py-3 rounded-sm text-xs font-bold"
+              onClick={() => deleteProject(index)}
+            >
+              Delete Project
+            </button>
           </div>
-
         </div>
       ))}
 

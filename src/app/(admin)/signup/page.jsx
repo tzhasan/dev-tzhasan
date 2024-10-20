@@ -1,12 +1,14 @@
 "use client";
 import Button from "@/app/components/shared-component/button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function page() {
+export default function Page() {
   const [Loading, setLoading] = useState(false);
-
+  const router = useRouter()
+  
   const handleSubmit = async (event) => {
      toast("Generating User and New Profile", {
        icon: "❗",
@@ -34,6 +36,7 @@ export default function page() {
         setLoading(false);
         toast.success("User created Successfully!");
         event.target.reset();
+        router.push("/signin");
       }
       if (response.status === 201) {
         setLoading(false);
@@ -45,6 +48,7 @@ export default function page() {
             color: "#fff",
           },
         });
+
       }
     } catch (error) {
       setLoading(false);
@@ -52,7 +56,7 @@ export default function page() {
     }
   };
   return (
-    <div className="bg-white h-[100vh] flex items-center">
+    <div className="bg-white dark:bg-darkmode h-[100vh] flex items-center">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="primary-width">
         <form
@@ -72,14 +76,14 @@ export default function page() {
             className="text-black dark:text-white bg-white dark:bg-darkmode w-full focus:border-b-[0.5px]  border-b-[0.5px] border-gray-300 focus:border-black focus:outline-none transition duration-500 p-2 text-sm"
             placeholder="Password here*"
           />
-            <Button
-              type={"submit"}
-              onSubmit={handleSubmit}
-              text={"Sign Up"}
-              loading={Loading}
-            />
+          <Button
+            type={"submit"}
+            onSubmit={handleSubmit}
+            text={"Sign Up"}
+            loading={Loading}
+          />
           <h1 className="text-soft_black">
-            Already have an account? 
+            Already have an account?
             <Link href={"/signin"} className="text-blue-500 ml-2">
               Sign In
             </Link>

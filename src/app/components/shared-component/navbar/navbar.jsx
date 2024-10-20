@@ -12,6 +12,7 @@ import { data } from "../../../../../public/data";
 
 export default function Navbar() {
   const user = useSession()
+    const [selectedLink, setSelectedLink] = useState(0);
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -61,7 +62,13 @@ export default function Navbar() {
             {/* Navmenu */}
 
             {items.map((item, index) => (
-              <NavLinks key={index} item={item} index={index} />
+              <NavLinks
+                key={index}
+                item={item}
+                index={index}
+                setSelectedLink={setSelectedLink}
+                selectedLink={selectedLink}
+              />
             ))}
             <div>
               <Link
@@ -86,7 +93,7 @@ export default function Navbar() {
               >
                 {menuBar ? (
                   <Image
-                  alt=""
+                    alt=""
                     src={"/assets/icons/close.svg"}
                     width={20}
                     height={20}
@@ -94,7 +101,7 @@ export default function Navbar() {
                   />
                 ) : (
                   <Image
-                  alt=""
+                    alt=""
                     src={"/assets/icons/menu.svg"}
                     width={20}
                     height={20}
@@ -104,7 +111,6 @@ export default function Navbar() {
               </div>
 
               <div
-                
                 className={`flex flex-col gap-5 absolute   right-0 top-14   md:hidden
           ${menuBar ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}
           transition-all duration-500 ease-in-out `}
