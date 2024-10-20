@@ -25,7 +25,7 @@ export default function Page() {
       password: event.target.password.value,
     };
     try {
-      const response = await fetch("http://localhost:3000/api/signup", {
+      const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/signup`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
