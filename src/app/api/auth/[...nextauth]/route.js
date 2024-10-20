@@ -1,12 +1,11 @@
 import CredentialProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
 import { connectDb } from "@/lib/connenctDb";
 import NextAuth from "next-auth/next";
 const handler = NextAuth({
   session: {
     secret: process.env.AUTH_SECRET,
     strategy: "jwt",
-    maxAge: 2592000,
+    maxAge: 3600,
   },
   providers: [
     CredentialProvider({
@@ -41,7 +40,18 @@ const handler = NextAuth({
       },
     }),
   ],
-  callbacks: {},
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user._id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
+  },
   pages: {
     signIn: "/admin/signin",
   },
