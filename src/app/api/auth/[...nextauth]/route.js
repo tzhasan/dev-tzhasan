@@ -41,16 +41,16 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user._id;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.id = token.id;
-      return session;
-    },
+    // async jwt({ token, user }) {
+    //   if (user) {
+    //     token.id = user._id;
+    //   }
+    //   return token;
+    // },
+    // async session({ session, token }) {
+    //   session.user.id = token.id;
+    //   return session;
+    // },
   },
   pages: {
     signIn: "/admin/signin",
