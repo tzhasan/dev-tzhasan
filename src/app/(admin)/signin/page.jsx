@@ -26,11 +26,14 @@ export default function Page() {
         password,
         redirect: false, // Prevent immediate redirect
         callbackUrl: "/",
-        // callbackUrl: path ? path : "/",
       });
 
+      // Log the full response for debugging
+      console.log("Sign-in Response:", respns);
 
       if (respns?.error) {
+        // Log the error part of the response
+        console.error("Error details:", respns?.error);
         toast.error("User not found");
         setLoading(false);
         return;
@@ -43,11 +46,14 @@ export default function Page() {
         router.push("/dashboard/profile");
       }
     } catch (error) {
+      // Detailed logging of the error
       console.log("🚀 ~ handleSubmit ~ error:", error);
+      console.error("Detailed Error Information:", error);
       toast.error("An error occurred during sign in");
       setLoading(false);
     }
   };
+
 
   return (
     <div className="bg-white dark:bg-darkmode h-[100vh] flex items-center">
