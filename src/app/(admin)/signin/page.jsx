@@ -25,12 +25,12 @@ export default function Page() {
         email,
         password,
         redirect: false, // Prevent immediate redirect
-        callbackUrl: path ? path : "/",
+        callbackUrl: "/",
+        // callbackUrl: path ? path : "/",
       });
 
 
       if (respns?.error) {
-        // Show a toast when there is an error (e.g., User not found)
         toast.error("User not found");
         setLoading(false);
         return;
