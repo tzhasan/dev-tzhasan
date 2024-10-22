@@ -26,7 +26,7 @@ export default function Profile() {
           currentSession?.data?.user?.email
         ) {
           const data = await getFullProfile(currentSession?.data?.user?.email);
-          setFullProfile(data.result);
+          setFullProfile(data?.result);
           setImage1(data?.result?.profile?.img || "");
           setImage2(data?.result?.about_me?.img || "");
           setSkills(data?.result?.skills || []);
