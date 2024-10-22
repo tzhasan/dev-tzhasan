@@ -11,20 +11,19 @@ import Loading from "@/app/loading";
 
 export default function HomePage() {
  const { data: session, status } = useSession();  // Get session data and status
-  const [data, setData] = useState({});            // State to store profile data
-  const [loading, setLoading] = useState(true);    // Loading state to handle UI rendering
-  
+ const [fullProfile, setfullProfile] = useState({});            // State to store profile data
+ const [loading, setLoading] = useState(true);    // Loading state to handle UI rendering
+ 
   // Function to fetch the profile data based on session status
   const fetchProfileData = async () => {
     try {
-      // Check if the user is authenticated and has an email
       if (status === "authenticated" && session?.user?.email) {
-        const userData = await getFullProfile(session.user.email);
-        setData(userData?.result);  // Set user profile data
+        const userData = await getFullProfile(session?.user?.email);
+        setfullProfile(userData?.result);  // Set user profile data
       } else {
         // Fetch default profile if no user is authenticated
         const defaultData = await getDefaultProfile();
-        setData(defaultData?.result);  // Set default profile data
+        setfullProfile(defaultData?.result);  // Set default profile data
       }
     } catch (error) {
       console.error("Error fetching profile:", error);
@@ -33,14 +32,9 @@ export default function HomePage() {
     }
   };
 
-  // useEffect to run the fetchProfileData only once on component mount or session change
-  useEffect(() => {
-    if (status !== 'loading') {  // Ensure session has been checked
-      fetchProfileData();  // Fetch profile data based on session
-      
-    }
-
-  }, [status, session]);  // Trigger when session status or session data changes
+ useEffect(() => {
+   fetchProfileData();
+ }, [status, session]);
 
   // While loading, show a loading indicator
   if (loading) {
@@ -48,16 +42,17 @@ export default function HomePage() {
   }
 
   // If no data is available (e.g., failed to fetch), show an error or placeholder
-  if (!data) {
+  if (!fullProfile) {
     return <div>No profile data available</div>;
   }
+
   return (
     <div>
-      <Banner profile={ data?.profile} />
-      <AboutMe about_me={data?.about_me } skills={data?.skills} social_links={data?.profile?.social_links} />
-      <Projects projects={data?.projects} />
-      <Contact profile={ data?.profile} social_links={data?.profile?.social_links}/>
-      <Footer profile={ data?.profile}/>
+      <Banner profile={ fullProfile?.profile} />
+      <AboutMe about_me={fullProfile?.about_me } skills={fullProfile?.skills} social_links={fullProfile?.profile?.social_links} />
+      <Projects projects={fullProfile?.projects} />
+      <Contact profile={ fullProfile?.profile} social_links={fullProfile?.profile?.social_links}/>
+      <Footer profile={ fullProfile?.profile}/>
     </div>
   );
 }

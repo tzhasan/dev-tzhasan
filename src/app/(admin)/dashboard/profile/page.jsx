@@ -10,7 +10,6 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Profile() {
   const currentSession = useSession();
   const [fullProfile, setFullProfile] = useState(null);
-  const [profileId, setProfileId] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [skills, setSkills] = useState([{ title: "", details: "" }]);
@@ -31,7 +30,6 @@ export default function Profile() {
           setImage2(data?.result?.about_me?.img || "");
           setSkills(data?.result?.skills || []);
           setProjects(data?.result?.projects || []);
-          setProfileId(data?.result?._id);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -40,11 +38,6 @@ export default function Profile() {
     fetchProfile();
   }, [currentSession?.status, currentSession?.data?.user?.email]);
 
-  // useEffect(() => {
-  //   console.log("🚀 ~ Profile ~ profile:", fullProfile);
-  //   console.log("🚀 ~ Profile ~ profileId: str-", profileId?.toString());
-  //   console.log("🚀 ~ Profile ~ profileId:", profileId);
-  // }, [fullProfile]);
 
   // Skills
   useEffect(() => {
