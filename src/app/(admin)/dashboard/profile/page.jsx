@@ -8,33 +8,37 @@ import { getFullProfile } from "@/app/utils/dataFetch";
 import { useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 export default function Profile() {
-const currentSession = useSession()
+  const currentSession = useSession();
   const [fullProfile, setFullProfile] = useState(null);
-  const [profileId, setProfileId] = useState('')
+  const [profileId, setProfileId] = useState("");
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
   const [skills, setSkills] = useState([{ title: "", details: "" }]);
-  const [projects, setProjects] = useState([{ title: '', link: '', details: '', img: '' }]);
-  
-   useEffect(() => {
+  const [projects, setProjects] = useState([
+    { title: "", link: "", details: "", img: "" },
+  ]);
+
+  useEffect(() => {
     const fetchProfile = async () => {
       try {
-        if (currentSession?.status === "authenticated" && currentSession?.data?.user?.email) {
+        if (
+          currentSession?.status === "authenticated" &&
+          currentSession?.data?.user?.email
+        ) {
           const data = await getFullProfile(currentSession?.data?.user?.email);
-          setFullProfile(data.result); 
+          setFullProfile(data.result);
           setImage1(data?.result?.profile?.img || "");
           setImage2(data?.result?.about_me?.img || "");
           setSkills(data?.result?.skills || []);
           setProjects(data?.result?.projects || []);
-          setProfileId(data?.result?._id); 
-          
+          setProfileId(data?.result?._id);
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
     fetchProfile();
-   }, [currentSession?.status,currentSession?.data?.user?.email]); 
+  }, [currentSession?.status, currentSession?.data?.user?.email]);
 
   // useEffect(() => {
   //   console.log("🚀 ~ Profile ~ profile:", fullProfile);
@@ -42,7 +46,6 @@ const currentSession = useSession()
   //   console.log("🚀 ~ Profile ~ profileId:", profileId);
   // }, [fullProfile]);
 
-  
   // Skills
   useEffect(() => {
     const skills = data.skills;
@@ -54,12 +57,12 @@ const currentSession = useSession()
     updatedSkills[index][event.target.name] = event.target.value;
     setSkills(updatedSkills);
   };
-  
+
   // Add a new skill
   const addSkill = () => {
     setSkills([...skills, { title: "", details: "" }]);
   };
-  
+
   // Delete a skill
   const deleteSkill = (index) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
@@ -68,48 +71,48 @@ const currentSession = useSession()
   // skill end ⬆️
 
   // handle image 🖼️ Upload ⬇️
- const handleImageChange1 = async (e) => {
-   var file = e.target.files[0];
-   if (file) {
-     const previewUrl = URL.createObjectURL(file); // Create a preview URL
-     setImage1(previewUrl); // Set the preview URL to the state
-   }
+  const handleImageChange1 = async (e) => {
+    var file = e.target.files[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file); // Create a preview URL
+      setImage1(previewUrl); // Set the preview URL to the state
+    }
 
-   const formData = new FormData();
-   formData.append("image", file); // 'image' is the expected key for imgbb
+    const formData = new FormData();
+    formData.append("image", file); // 'image' is the expected key for imgbb
 
-   // Use toast.promise to handle loading, success, and error states
-   toast.promise(
-     // The function that returns the promise (image upload process)
-     fetch(
-       `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
-       {
-         method: "POST",
-         body: formData,
-       }
-     )
-       .then((response) => {
-         if (!response.ok) {
-           throw new Error(`HTTP error! Status: ${response.status}`);
-         }
-         return response.json();
-       })
-       .then((result) => {
-         setImage1(result?.data?.display_url); // Set the uploaded image URL
-         console.log("🚀 ~ handleImageChange1 ~ result:", result);
-       })
-       .catch((error) => {
-         console.error("Error uploading image:", error);
-         throw error; // Re-throw the error for the toast to catch it
-       }),
+    // Use toast.promise to handle loading, success, and error states
+    toast.promise(
+      // The function that returns the promise (image upload process)
+      fetch(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((result) => {
+          setImage1(result?.data?.display_url); // Set the uploaded image URL
+          console.log("🚀 ~ handleImageChange1 ~ result:", result);
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+          throw error; // Re-throw the error for the toast to catch it
+        }),
 
-     {
-       loading: "Uploading image...",
-       success: <b>Banner Image uploaded successfully!</b>,
-       error: <b>Failed to upload image.</b>,
-     }
-   );
- };
+      {
+        loading: "Uploading image...",
+        success: <b>Banner Image uploaded successfully!</b>,
+        error: <b>Failed to upload image.</b>,
+      }
+    );
+  };
 
   const handleImageChange2 = async (e) => {
     var file = e.target.files[0];
@@ -155,60 +158,59 @@ const currentSession = useSession()
   };
   // handle image 🖼️ Upload ⬆️
 
-   const handleSubmit = async (event) => {
-  event.preventDefault();
-  
-  // Creating the profile object to update
-  const newProfile = {
-    profile: {
-      logo: event.target.logo.value,
-      name: event.target.name.value,
-      profession: event.target.profession.value,
-      img: image1,  // From state
-      address: event.target.address.value,
-      email: event.target.email.value.split(/[;,]/).map((e) => e.trim()),
-      phone: event.target.phone.value.split(/[;,]/).map((p) => p.trim()),
-      social_links: [
-        event.target.facebook.value,
-        event.target.linkedin.value,
-        event.target.x.value,
-        event.target.github.value,
-        event.target.youtube.value,
-        event.target.instagram.value,
-      ],
-      copyright: event.target.copyright.value,
-    },
-    about_me: {
-      img: image2,  // From state
-      description: event.target.description.value,
-    },
-    skills,
-    projects
-  };
-console.log(currentSession?.data?.user?.email);
-  try {
-    const resp = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/profile/${currentSession?.data?.user?.email}`, // Pass the profile ID
-      {
-        method: "PATCH",
-        body: JSON.stringify(newProfile),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    
-    if (resp.status === 200) {
-      toast.success("Updated Successfully!");
-    } else {
-      const errorData = await resp.json();
-      console.error("Update failed:", errorData);
-      toast.success("Update failed:", errorData);
-    }
-  } catch (error) {
-    console.error("Error during the update:", error);
-    toast.success("Error during the update:", error);
-  }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-};
+    // Creating the profile object to update
+    const newProfile = {
+      profile: {
+        logo: event.target.logo.value,
+        name: event.target.name.value,
+        profession: event.target.profession.value,
+        img: image1, // From state
+        address: event.target.address.value,
+        email: event.target.email.value.split(/[;,]/).map((e) => e.trim()),
+        phone: event.target.phone.value.split(/[;,]/).map((p) => p.trim()),
+        social_links: [
+          event.target.facebook.value,
+          event.target.linkedin.value,
+          event.target.x.value,
+          event.target.github.value,
+          event.target.youtube.value,
+          event.target.instagram.value,
+        ],
+        copyright: event.target.copyright.value,
+      },
+      about_me: {
+        img: image2, // From state
+        description: event.target.description.value,
+      },
+      skills,
+      projects,
+    };
+    console.log(currentSession?.data?.user?.email);
+    try {
+      const resp = await fetch(
+        `${process.env.NEXTAUTH_URL}/api/profile/${currentSession?.data?.user?.email}`, // Pass the profile ID
+        {
+          method: "PATCH",
+          body: JSON.stringify(newProfile),
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      if (resp.status === 200) {
+        toast.success("Updated Successfully!");
+      } else {
+        const errorData = await resp.json();
+        console.error("Update failed:", errorData);
+        toast.success("Update failed:", errorData);
+      }
+    } catch (error) {
+      console.error("Error during the update:", error);
+      toast.success("Error during the update:", error);
+    }
+  };
 
   return (
     <div className="bg-white dark:bg-darkmode">

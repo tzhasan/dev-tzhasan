@@ -1,36 +1,30 @@
-"use client"
-import { useSession } from 'next-auth/react'
-import React, { useEffect, useState } from 'react'
+"use client";
+import { useSession } from "next-auth/react";
+import React, { useEffect, useState } from "react";
 
 export default function Page() {
-  const [messages, setMessages] = useState([])
-  const [loading, setLoading] = useState(false)
-  const {data:session,status} = useSession()
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const { data: session, status } = useSession();
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/messages`
-        );
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/messages`);
         const data = await res.json();
         setMessages(data?.result);
-      setLoading(false);
-
+        setLoading(false);
       } catch (error) {
-        console.log("🚀 ~ fetchData ~ error:", error)
-      setLoading(false);
-        
+        console.log("🚀 ~ fetchData ~ error:", error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
-      finally {
-        setLoading(false)
-        
-      }
-    }
-    
-    fetchData()
-  }, [])
- 
+    };
+
+    fetchData();
+  }, []);
+
   if (loading) {
     return (
       <div className="p-10 flex flex-col space-y-10">
@@ -103,8 +97,6 @@ export default function Page() {
     </div>
   );
 }
-
-
 
 const demoMessages = [
   {

@@ -8,31 +8,31 @@ export default function Contact({ profile, social_links }) {
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("Send Now");
   const [localTime, setLocalTime] = useState("");
-  
- useEffect(() => {
-   const updateTime = () => {
-     const now = new Date();
 
-     // Format both date and time
-     const formattedTime = new Intl.DateTimeFormat(navigator.language, {
-       year: "numeric",
-       month: "long", // Use 'numeric' or '2-digit' for shorter month format
-       day: "numeric",
-       hour: "numeric",
-       minute: "numeric",
-       second: "numeric",
-       hour12: true, // Set to false for 24-hour format
-     }).format(now);
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
 
-     setLocalTime(formattedTime);
-   };
+      // Format both date and time
+      const formattedTime = new Intl.DateTimeFormat(navigator.language, {
+        year: "numeric",
+        month: "long", // Use 'numeric' or '2-digit' for shorter month format
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true, // Set to false for 24-hour format
+      }).format(now);
 
-   // Update time every second
-   const interval = setInterval(updateTime, 1000);
+      setLocalTime(formattedTime);
+    };
 
-   // Cleanup on component unmount
-   return () => clearInterval(interval);
- }, []);
+    // Update time every second
+    const interval = setInterval(updateTime, 1000);
+
+    // Cleanup on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -66,27 +66,23 @@ export default function Contact({ profile, social_links }) {
       }
     );
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/messages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(templateParams),
-        }
-      ); 
+      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/messages`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(templateParams),
+      });
       if (res.status === 200) {
         // toast.success("Updated Successfully!");
-        console.log(res)
+        console.log(res);
       } else {
         const errorData = await res.json();
         console.error("Message adding failed:", errorData);
         // toast.success("Update failed:", errorData);
       }
     } catch (error) {
-      console.log("🚀 ~ handleSubmit ~ error:", error)
-      
+      console.log("🚀 ~ handleSubmit ~ error:", error);
     }
   };
   return (

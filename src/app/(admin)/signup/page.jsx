@@ -7,17 +7,17 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
   const [Loading, setLoading] = useState(false);
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const handleSubmit = async (event) => {
-     toast("Generating User and New Profile", {
-       icon: "❗",
-       style: {
-         borderRadius: "10px",
-         background: "#333",
-         color: "#fff",
-       },
-     });
+    toast("Generating User and New Profile", {
+      icon: "❗",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
     event.preventDefault();
     setLoading(true);
     const newUser = {
@@ -25,7 +25,7 @@ export default function Page() {
       password: event.target.password.value,
     };
     try {
-      const response = await fetch(`${NEXT_PUBLIC_API_URL}/api/signup`, {
+      const response = await fetch(`${NEXTAUTH_URL}/api/signup`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -48,7 +48,6 @@ export default function Page() {
             color: "#fff",
           },
         });
-
       }
     } catch (error) {
       setLoading(false);
