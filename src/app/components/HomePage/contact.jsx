@@ -8,18 +8,6 @@ export default function Contact({ profile, social_links }) {
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("Send Now");
   const [localTime, setLocalTime] = useState("");
-  console.log(
-    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
-    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
-  );
-  console.log(
-    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
-    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
-  );
-  console.log(
-    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
-    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-  );
   
   useEffect(() => {
     const updateTime = () => {
@@ -28,12 +16,12 @@ export default function Contact({ profile, social_links }) {
       // Format both date and time
       const formattedTime = new Intl.DateTimeFormat(navigator.language, {
         year: "numeric",
-        month: "long", // Use 'numeric' or '2-digit' for shorter month format
+        month: "long", 
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
         second: "numeric",
-        hour12: true, // Set to false for 24-hour format
+        hour12: true,
       }).format(now);
 
       setLocalTime(formattedTime);
@@ -77,28 +65,28 @@ export default function Contact({ profile, social_links }) {
         },
       }
     );
-    // try {
-    //   const res = await fetch(
-    //     `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
-    //     {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(templateParams),
-    //     }
-    //   );
-    //   if (res.status === 200) {
-    //     // toast.success("Updated Successfully!");
-    //     console.log(res);
-    //   } else {
-    //     const errorData = await res.json();
-    //     console.error("Message adding failed:", errorData);
-    //     // toast.success("Update failed:", errorData);
-    //   }
-    // } catch (error) {
-    //   console.log("🚀 ~ handleSubmit ~ error:", error);
-    // }
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(templateParams),
+        }
+      );
+      if (res.status === 200) {
+        toast.success("Added as a Message Successfully!");
+        console.log(res);
+      } else {
+        const errorData = await res.json();
+        console.error("Message adding failed:", errorData);
+        toast.success("Adding on Message list failed:", errorData);
+      }
+    } catch (error) {
+      console.log("🚀 ~ handleSubmit ~ error:", error);
+    }
   };
   return (
     <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
