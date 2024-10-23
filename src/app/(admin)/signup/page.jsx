@@ -25,7 +25,7 @@ export default function Page() {
       password: event.target.password.value,
     };
     try {
-      const response = await fetch(`${NEXTAUTH_URL}/api/signup`, {
+      const response = await fetch(`${NEXT_PUBLIC_NEXTAUTH_URL}/api/signup`, {
         method: "POST",
         headers: {
           "content-type": "application/json",

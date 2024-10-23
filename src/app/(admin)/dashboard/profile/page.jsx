@@ -16,7 +16,6 @@ export default function Profile() {
   const [projects, setProjects] = useState([
     { title: "", link: "", details: "", img: "" },
   ]);
-
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -37,7 +36,6 @@ export default function Profile() {
     };
     fetchProfile();
   }, [currentSession?.status, currentSession?.data?.user?.email]);
-
 
   // Skills
   useEffect(() => {
@@ -154,13 +152,12 @@ export default function Profile() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Creating the profile object to update
     const newProfile = {
       profile: {
         logo: event.target.logo.value,
         name: event.target.name.value,
         profession: event.target.profession.value,
-        img: image1, // From state
+        img: image1,
         address: event.target.address.value,
         email: event.target.email.value.split(/[;,]/).map((e) => e.trim()),
         phone: event.target.phone.value.split(/[;,]/).map((p) => p.trim()),
@@ -175,16 +172,16 @@ export default function Profile() {
         copyright: event.target.copyright.value,
       },
       about_me: {
-        img: image2, // From state
+        img: image2,
         description: event.target.description.value,
       },
       skills,
       projects,
     };
-    console.log(currentSession?.data?.user?.email);
+
     try {
       const resp = await fetch(
-        `${process.env.NEXTAUTH_URL}/api/profile/${currentSession?.data?.user?.email}`, // Pass the profile ID
+        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_NEXTAUTH_URL}/api/profile/${currentSession?.data?.user?.email}`,
         {
           method: "PATCH",
           body: JSON.stringify(newProfile),
@@ -195,13 +192,20 @@ export default function Profile() {
       if (resp.status === 200) {
         toast.success("Updated Successfully!");
       } else {
-        const errorData = await resp.json();
-        console.error("Update failed:", errorData);
-        toast.success("Update failed:", errorData);
+        // Only attempt to parse if the response contains JSON data
+        const errorData = await resp.text(); // Use .text() to safely get any response content
+        try {
+          const parsedError = JSON.parse(errorData); // Try parsing it to JSON if possible
+          console.error("Update failed:", parsedError);
+          toast.error("Update failed: " + parsedError.message);
+        } catch (err) {
+          console.error("Non-JSON response or failed to parse:", errorData);
+          toast.error("Update failed with non-JSON response");
+        }
       }
     } catch (error) {
       console.error("Error during the update:", error);
-      toast.success("Error during the update:", error);
+      toast.error("Error during the update: " + error.message);
     }
   };
 

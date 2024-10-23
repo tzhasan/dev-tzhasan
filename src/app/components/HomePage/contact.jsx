@@ -66,13 +66,16 @@ export default function Contact({ profile, social_links }) {
       }
     );
     try {
-      const res = await fetch(`${process.env.NEXTAUTH_URL}/api/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(templateParams),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(templateParams),
+        }
+      );
       if (res.status === 200) {
         // toast.success("Updated Successfully!");
         console.log(res);

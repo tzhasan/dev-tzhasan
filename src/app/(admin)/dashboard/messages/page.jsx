@@ -6,12 +6,19 @@ export default function Page() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
+  console.log(
+    "🚀 ~ NEXT_PUBLIC_NEXTAUTH_URL ~ data:",
+    process.env.NEXT_PUBLIC_NEXTAUTH_URL
+  );
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/messages`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`
+        );
         const data = await res.json();
+        console.log("🚀 ~ fetchData ~ data:", data?.result);
         setMessages(data?.result);
         setLoading(false);
       } catch (error) {
