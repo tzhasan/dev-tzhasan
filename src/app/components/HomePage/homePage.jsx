@@ -14,12 +14,12 @@ export default function HomePage() {
  const [fullProfile, setfullProfile] = useState({});            // State to store profile data
  const [loading, setLoading] = useState(true);    // Loading state to handle UI rendering
  
-  // Function to fetch the profile data based on session status
-  const fetchProfileData = async () => {
-    try {
-      if (status === "authenticated" && session?.user?.email) {
-        const userData = await getFullProfile(session?.user?.email);
-        setfullProfile(userData?.result);  // Set user profile data
+ // Function to fetch the profile data based on session status
+ const fetchProfileData = async () => {
+   try {
+     if (status === "authenticated" && session?.user?.email) {
+       const userData = await getFullProfile(session?.user?.email);
+       setfullProfile(userData?.result);  // Set user profile data
       } else {
         // Fetch default profile if no user is authenticated
         const defaultData = await getDefaultProfile();
@@ -31,21 +31,22 @@ export default function HomePage() {
       setLoading(false);  // Stop the loading state after fetching the data
     }
   };
-
- useEffect(() => {
-   fetchProfileData();
- }, [status, session]);
-
+  
+  useEffect(() => {
+    fetchProfileData();
+  }, [status, session]);
+  
   // While loading, show a loading indicator
   if (loading) {
     return <Loading/>;
   }
-
+  
   // If no data is available (e.g., failed to fetch), show an error or placeholder
   if (!fullProfile) {
     return <div>No profile data available</div>;
   }
-
+  
+  console.log("🚀 ~ HomePage ~ fullProfile:", fullProfile)
   return (
     <div>
       <Banner profile={ fullProfile?.profile} />

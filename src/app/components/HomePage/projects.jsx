@@ -4,8 +4,8 @@ import Underline from "../shared-component/underline.jsx";
 import Waveup from "../../../../public/assets/icons/waveup.jsx";
 import Wavedown from "../../../../public/assets/icons/wavedown.jsx";
 import ProjectCard from "../shared-component/projectCard.jsx";
-export default function Projects({projects}) {
-
+import ProjectsCarousel from "../shared-component/ProjectsCarousel.jsx";
+export default function Projects({ projects }) {
   return (
     <div className="w-full  bg-white dark:bg-darkmode">
       <Wavedown />
@@ -26,16 +26,12 @@ export default function Projects({projects}) {
               <Underline />
             </div>
             <div>
-              {/*  */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-10 mt-5">
-                {
-                  projects? projects.map((project, index) => {
-                    return <ProjectCard key={index} project={project} index={ index} />;
-                }):
-                (projectsSkeleton.map((project, index) => {
-                  return <div className="skeleton h-[30vh] " key={index}></div>;
-                }))
-               }
+              <div className=" mt-5">
+                {projects ? (
+                  <ProjectsCarousel projects={projects} />
+                ) : (
+                  <div className="skeleton h-[30vh] "></div>
+                )}
               </div>
               {/*  */}
             </div>
@@ -46,4 +42,4 @@ export default function Projects({projects}) {
     </div>
   );
 }
-export const projectsSkeleton = [1,2,3,4,5,6];
+export const projectsSkeleton = [1, 2, 3, 4, 5, 6];

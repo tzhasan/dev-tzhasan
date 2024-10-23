@@ -13,11 +13,11 @@ export default function ProjectCard({ project,index }) {
         <h1 className="text-xl font-bold text-gray-200 ">{project?.title}</h1>
         <div className="relative group">
           <Image
-            src={"/assets/images/project.jpg"}
-            width={600}
-            height={600}
+            src={project?.img}
+            width={300}
+            height={300}
             alt="project"
-            className="rounded-lg "
+            className="rounded-lg w-full object-cover"
           />
           <div className="absolute top-0 bg-gray-400 bg-opacity-50 w-full h-full  flex items-center justify-center rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100 ">
             <Link

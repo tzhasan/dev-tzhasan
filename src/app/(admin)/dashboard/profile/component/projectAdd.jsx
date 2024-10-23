@@ -1,36 +1,47 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function ProjectAdd({setProjects,projects}) {
 
   // Handle image upload to imgbb and set the image link
-  const handleImageChange = async (index, e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
+ const handleImageChange = async (index, e) => {
+   const file = e.target.files[0];
+   if (file) {
+     const formData = new FormData();
+     formData.append("image", file);
 
-      try {
-        const response = await fetch(
-          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
-          {
-            method: 'POST',
-            body: formData,
-          }
-        );
+     try {
+       const response = await fetch(
+         `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMAGEBB_API_KEY}`,
+         {
+           method: "POST",
+           body: formData,
+         }
+       );
 
-        const result = await response.json();
-        const imageUrl = result.data.display_url;
+       const result = await response.json();
 
-        // Update the image link in the project object
-        const updatedProjects = [...projects];
-        updatedProjects[index].img = imageUrl;
-        setProjects(updatedProjects);
-      } catch (error) {
-        console.error('Image upload failed', error);
-      }
-    }
-  };
+       if (response.ok && result.success) {
+         const imageUrl = result.data.display_url;
+
+         // Update the image link in the project object
+         const updatedProjects = [...projects];
+         updatedProjects[index].img = imageUrl;
+         setProjects(updatedProjects);
+
+         // Trigger a success toast notification
+         toast.success("Image uploaded successfully!");
+       } else {
+         throw new Error(result.error.message || "Image upload failed");
+       }
+     } catch (error) {
+       console.error("Image upload failed", error);
+       toast.error("Failed to upload image. Please try again.");
+     }
+   }
+ };
+
 
   // Handle field changes for title, link, and details
   const handleFieldChange = (index, event) => {
@@ -50,14 +61,10 @@ export default function ProjectAdd({setProjects,projects}) {
     setProjects(updatedProjects);
   };
 
-  // Add all projects to the database (console log in this case)
-  const addAllProjectsToDatabase = () => {
-    console.log('All Projects:', projects);
-    // Add your API call logic here to send all projects to the database
-  };
-
   return (
     <div className="space-y-5">
+      <Toaster position="top-center" reverseOrder={false} />
+
       <h6 className="text-md dark font-bold">Projects</h6>
 
       {projects?.map((project, index) => (
@@ -70,16 +77,18 @@ export default function ProjectAdd({setProjects,projects}) {
                 name="title"
                 value={project.title}
                 onChange={(event) => handleFieldChange(index, event)}
+                className="w-full"
               />
             </label>
 
             <label className="dashboard-input flex items-center gap-2">
-              Site Link:
+              Link:
               <input
                 type="text"
                 name="link"
                 value={project.link}
                 onChange={(event) => handleFieldChange(index, event)}
+                className="w-full"
               />
             </label>
 
