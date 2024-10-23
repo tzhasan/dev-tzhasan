@@ -8,7 +8,19 @@ export default function Contact({ profile, social_links }) {
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("Send Now");
   const [localTime, setLocalTime] = useState("");
-
+  console.log(
+    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+  );
+  console.log(
+    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+  );
+  console.log(
+    "🚀 ~ Contact ~ NEXT_PUBLIC_EMAILJS_SERVICE_ID:",
+    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+  );
+  
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -65,28 +77,28 @@ export default function Contact({ profile, social_links }) {
         },
       }
     );
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(templateParams),
-        }
-      );
-      if (res.status === 200) {
-        // toast.success("Updated Successfully!");
-        console.log(res);
-      } else {
-        const errorData = await res.json();
-        console.error("Message adding failed:", errorData);
-        // toast.success("Update failed:", errorData);
-      }
-    } catch (error) {
-      console.log("🚀 ~ handleSubmit ~ error:", error);
-    }
+    // try {
+    //   const res = await fetch(
+    //     `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       body: JSON.stringify(templateParams),
+    //     }
+    //   );
+    //   if (res.status === 200) {
+    //     // toast.success("Updated Successfully!");
+    //     console.log(res);
+    //   } else {
+    //     const errorData = await res.json();
+    //     console.error("Message adding failed:", errorData);
+    //     // toast.success("Update failed:", errorData);
+    //   }
+    // } catch (error) {
+    //   console.log("🚀 ~ handleSubmit ~ error:", error);
+    // }
   };
   return (
     <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
