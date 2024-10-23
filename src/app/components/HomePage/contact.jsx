@@ -67,7 +67,7 @@ export default function Contact({ profile, social_links }) {
     );
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
+        `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/messages`,
         {
           method: "POST",
           headers: {

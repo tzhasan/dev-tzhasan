@@ -181,7 +181,7 @@ export default function Profile() {
 
     try {
       const resp = await fetch(
-        `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_NEXTAUTH_URL}/api/profile/${currentSession?.data?.user?.email}`,
+        `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/profile/${currentSession?.data?.user?.email}`,
         {
           method: "PATCH",
           body: JSON.stringify(newProfile),
