@@ -13,7 +13,7 @@ export default function Layout({ children }) {
  return (
    <div className="min-h-screen overflow-x-hidden bg-primary_black">
      {/* Navbar for smaller screens */}
-     <div className="block md:hidden fixed top-0 left-0 w-full">
+     <div className="block md:hidden fixed top-0 left-0 w-full z-10">
        <DashboardNav />
      </div>
 

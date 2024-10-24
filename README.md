@@ -48,3 +48,4 @@ todo-
 8. stylish mouse feature
 9. *done* prject image is not setting up properly
 10. From Projects details page to home page , it should be auto scroll to last position.
+11. logo from navbar need to fix , its static now .
