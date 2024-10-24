@@ -1,7 +1,7 @@
-import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 import "./globals.css";
 import AuthProvider from "./provider/authProvider";
 import MenubarProvider from "./provider/menubarProvider";
+import ProfileProvider from "./provider/profileProvider";
 import ThemeProvider from "./provider/themeProvider";
 
 export const metadata = {
@@ -15,11 +15,11 @@ export default function RootLayout({ children }) {
       <body className="font-primary ">
         <AuthProvider>
           <MenubarProvider>
+            <ProfileProvider>
             <ThemeProvider>
-              
               {children}
-              
             </ThemeProvider>
+            </ProfileProvider>
           </MenubarProvider>
         </AuthProvider>
       </body>

@@ -9,6 +9,7 @@ import TopNav from "../topNav";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { data } from "../../../../../public/data";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 export default function Navbar() {
   const user = useSession()
@@ -72,16 +73,23 @@ export default function Navbar() {
             ))}
             <div>
               <Link
-                scroll={true}
                 href={"./dashboard/profile"}
                 className=" text-white hidden md:block cursor-pointer"
                 style={{ fontWeight: 500 }}
               >
-                <h6 className="text-sm group-hover:hidden ">DashBoard</h6>
-                {/* <h4 className="text-sm hidden group-hover:block">
-                  {item.title.toLowerCase()}
-                </h4> */}
+                <h6 className="text-sm  ">DashBoard</h6>
               </Link>
+            </div>
+            <div>
+              <button
+                onClick={() =>
+                  document.getElementById("my_modal_5").showModal()
+                }
+                className=" text-white hidden md:block cursor-pointer"
+                style={{ fontWeight: 500 }}
+              >
+                <IoInformationCircleOutline className="font-bold text-xl" />
+              </button>
             </div>
 
             <div className="flex items-center gap-5">
@@ -128,6 +136,16 @@ export default function Navbar() {
                   >
                     <h6 className="text-sm font-bold">DashBoard</h6>
                   </Link>
+                </div>
+                <div className="transition duration-300 ease-in-out">
+                  <button
+                    className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit text-sm font-bold"
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                  >
+                    <IoInformationCircleOutline className="font-bold text-xl" />
+                  </button>
                 </div>
               </div>
             </div>
