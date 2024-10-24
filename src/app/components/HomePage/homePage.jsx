@@ -46,7 +46,6 @@ export default function HomePage() {
     return <div>No profile data available</div>;
   }
   
-  console.log("🚀 ~ HomePage ~ fullProfile:", fullProfile)
   return (
     <div>
       <Banner profile={ fullProfile?.profile} />

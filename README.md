@@ -45,7 +45,7 @@ todo-
 2. *done* Need to change the card for projects
 3. *done* Need to make responsive for mobile view dashboard page 
 4. Need to hide the dashboard if user not login
-5. Skill section Should be single column for mobile view
+5. *done*Skill section Should be single column for mobile view
 6. Need to add a model button and put the features about my portfolio.
 7. Need for animation package for my portfolio
 8. stylish mouse feature

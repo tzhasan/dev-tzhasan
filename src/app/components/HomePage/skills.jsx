@@ -11,17 +11,10 @@ export default function Skills({skills}) {
         </h1>
         <Underline />
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2">
+      <div className="grid grid-cols-1  md:grid-cols-2 gap-2 mt-5">
         {skills && skills.map((skill, index) => {
-          const { title, icon, description } = skill;
-          return (
-            <SkillCard
-              title={title}
-              icon={icon}
-              description={description}
-              key={index}
-            />
-          );
+          const { title, description } = skill;
+          return <SkillCard skill={skill} key={index} />;
         })}
       </div>
     </div>
