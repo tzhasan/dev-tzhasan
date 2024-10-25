@@ -2,11 +2,16 @@
 import DashboardNav from "@/app/components/shared-component/navbar/dashboardNav";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
-import { data } from "../../../../public/data";
+import React, { useContext } from "react";
 import { useSession } from "next-auth/react";
+import { RiProfileLine } from "react-icons/ri";
+import { BiMessageSquareDetail } from "react-icons/bi";
+import { VscSettings } from "react-icons/vsc";
+import { TbBrandGoogleHome } from "react-icons/tb";
+import { profileContext } from "@/app/provider/profileProvider";
 
 export default function Layout({ children }) {
+  const { profile } = useContext(profileContext);
   const user = useSession();
   const pathname = usePathname();
 
@@ -14,7 +19,7 @@ export default function Layout({ children }) {
    <div className="min-h-screen overflow-x-hidden bg-primary_black">
      {/* Navbar for smaller screens */}
      <div className="block md:hidden fixed top-0 left-0 w-full z-10">
-       <DashboardNav />
+       <DashboardNav items={ items} />
      </div>
 
      {/* Main layout with fixed sidebar for larger screens */}
@@ -26,8 +31,8 @@ export default function Layout({ children }) {
              {/* Logo and status */}
              <div className="flex items-center gap-2 pl-2 pt-2">
                <h1 className="font-logo text-white text-md md:text-xl lg:text-2xl font-bold">
-                 {data ? (
-                   data?.profile?.logo
+                 {profile ? (
+                   profile?.profile?.logo
                  ) : (
                    <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
                  )}
@@ -49,12 +54,13 @@ export default function Layout({ children }) {
                <Link
                  href={item.href}
                  key={index}
-                 className={`py-2 pl-2 ${
+                 className={`py-2 pl-2 flex items-center gap-2 ${
                    pathname === item.href
                      ? "text-black bg-white"
                      : "text-white bg-zinc-800"
                  }`}
                >
+                 {item.icon}
                  {item.title}
                </Link>
              ))}
@@ -72,10 +78,14 @@ export default function Layout({ children }) {
 }
 
 const items = [
-  { title: "Profile", href: "/dashboard/profile" },
-  { title: "Messages", href: "/dashboard/messages" },
-  { title: "Settings", href: "/dashboard/settings" },
-  { title: "Back to Home", href: "/" },
+  { title: "Profile", href: "/dashboard/profile", icon: <RiProfileLine /> },
+  {
+    title: "Messages",
+    href: "/dashboard/messages",
+    icon: <BiMessageSquareDetail />,
+  },
+  { title: "Settings", href: "/dashboard/settings", icon: <VscSettings /> },
+  { title: "Back to Home", href: "/", icon: <TbBrandGoogleHome /> },
 ];
 
 

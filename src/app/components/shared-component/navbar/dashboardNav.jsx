@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
-import { data } from '../../../../../public/data';
 import { useSession } from 'next-auth/react';
 import { MenuBarContext } from '@/app/provider/menubarProvider';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { profileContext } from '@/app/provider/profileProvider';
 
-export default function DashboardNav() {
+export default function DashboardNav({items}) {
   const user = useSession();
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
+  const {profile} = useContext(profileContext)
   const pathname = usePathname();
 
   return (
@@ -17,8 +18,8 @@ export default function DashboardNav() {
         <div className="flex items-center gap-2">
           {/* Logo */}
           <h1 className="font-logo text-white text-xl sm:text-2xl md:text-4xl font-bold">
-            {data ? (
-              data?.profile?.logo
+            {profile ? (
+              profile?.profile?.logo
             ) : (
               <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
             )}
@@ -63,19 +64,14 @@ export default function DashboardNav() {
                 pathname === item.href
                   ? "text-white bg-black"
                   : "text-black bg-gray-200"
-              } py-1 px-4 md:hidden block cursor-pointer ml-auto  rounded-full w-fit`}
+              } py-1 px-4 md:hidden  cursor-pointer ml-auto  rounded-full w-fit flex items-center gap-1`}
               style={{ fontWeight: 500 }}
             >
               <h6 className="text-sm font-bold">{item.title}</h6>
+              {item.icon}
             </Link>
           ))}
       </div>
     </div>
   );
 }
-const items = [
-  { title: "Profile", href: "/dashboard/profile" },
-  { title: "Settings", href: "/dashboard/settings" },
-  { title: "Messages", href: "/dashboard/messages" },
-  { title: "Back to Home", href: "/" },
-];

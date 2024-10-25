@@ -7,12 +7,13 @@ import Button from "@/app/components/shared-component/button";
 import { getFullProfile } from "@/app/utils/dataFetch";
 import { useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
+import { MdOutlineDeleteSweep } from "react-icons/md";
 export default function Profile() {
   const currentSession = useSession();
   const [fullProfile, setFullProfile] = useState(null);
   const [image1, setImage1] = useState("");
   const [image2, setImage2] = useState("");
-  const [skills, setSkills] = useState([{ title: "", details: "" }]);
+  const [skills, setSkills] = useState([{ title: "", description: "" }]);
   const [projects, setProjects] = useState([
     { title: "", link: "", details: "", img: "" },
   ]);
@@ -51,7 +52,7 @@ export default function Profile() {
 
   // Add a new skill
   const addSkill = () => {
-    setSkills([...skills, { title: "", details: "" }]);
+    setSkills([...skills, { title: "", description: "" }]);
   };
 
   // Delete a skill
@@ -377,25 +378,25 @@ export default function Profile() {
                         type="text"
                         name="title"
                         placeholder="Skill Title"
-                        value={skill.title}
+                        defaultValue={skill.title}
                         onChange={(event) => handleChange(index, event)}
                         className="dashboard-input"
                       />
                       <input
                         type="text"
-                        name="details"
+                        name="description"
                         placeholder="Skill Details"
-                        value={skill.description}
+                        defaultValue={skill.description}
                         onChange={(event) => handleChange(index, event)}
                         className="dashboard-input"
                       />
                     </div>
                     <button
-                      className="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded-sm text-xs"
+                      className=" hover:bg-red-700 group text-white py-1 px-2 rounded-sm text-xs"
                       type="button"
                       onClick={() => deleteSkill(index)}
                     >
-                      Delete Skill
+                      <MdOutlineDeleteSweep className="text-2xl text-red-500 group-hover:text-white"/>
                     </button>
                   </div>
                 ))}

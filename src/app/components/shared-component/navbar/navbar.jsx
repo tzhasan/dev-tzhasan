@@ -8,13 +8,15 @@ import Menulinks from "./menulinks";
 import TopNav from "../topNav";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { data } from "../../../../../public/data";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { profileContext } from "@/app/provider/profileProvider";
 
 export default function Navbar() {
   const user = useSession()
     const [selectedLink, setSelectedLink] = useState(0);
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
+    const { profile } = useContext(profileContext);
+
   const [scrollPosition, setScrollPosition] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
@@ -49,8 +51,8 @@ export default function Navbar() {
           <div className="flex items-center gap-2">
             {/* Logo */}
             <h1 className="font-logo text-white text-xl sm:text-2xl md:text-4xl font-bold">
-              {data ? (
-                data?.profile?.logo
+              {profile ? (
+                profile?.profile?.logo
               ) : (
                 <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
               )}
@@ -71,15 +73,17 @@ export default function Navbar() {
                 selectedLink={selectedLink}
               />
             ))}
-            <div>
-              <Link
-                href={"./dashboard/profile"}
-                className=" text-white hidden md:block cursor-pointer"
-                style={{ fontWeight: 500 }}
-              >
-                <h6 className="text-sm  ">DashBoard</h6>
-              </Link>
-            </div>
+            {user?.status === "authenticated" && (
+              <div>
+                <Link
+                  href={"./dashboard/profile"}
+                  className=" text-white hidden md:block cursor-pointer"
+                  style={{ fontWeight: 500 }}
+                >
+                  <h6 className="text-sm  ">DashBoard</h6>
+                </Link>
+              </div>
+            )}
             <div>
               <button
                 onClick={() =>
@@ -127,6 +131,8 @@ export default function Navbar() {
                   items.map((item, index) => (
                     <Menulinks key={index} item={item} index={index} />
                   ))}
+                {user?.status === "authenticated" &&
+                
                 <div className="transition duration-500 ease-in-out">
                   <Link
                     scroll={true}
@@ -137,6 +143,7 @@ export default function Navbar() {
                     <h6 className="text-sm font-bold">DashBoard</h6>
                   </Link>
                 </div>
+                }
                 <div className="transition duration-300 ease-in-out">
                   <button
                     className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit text-sm font-bold"

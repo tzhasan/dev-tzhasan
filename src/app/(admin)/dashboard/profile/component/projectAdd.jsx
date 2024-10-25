@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { MdOutlineDeleteSweep } from 'react-icons/md';
 
 export default function ProjectAdd({setProjects,projects}) {
 
@@ -122,10 +123,11 @@ export default function ProjectAdd({setProjects,projects}) {
               />
             )}
             <button
-              className="bg-red-500 hover:bg-red-700 mt-5 text-white py-3 rounded-sm text-xs font-bold"
+              className="hover:bg-red-700 group  flex  w-full py-1"
               onClick={() => deleteProject(index)}
             >
-              Delete Project
+              {/* <span className='text-black group-hover:text-white'>Delete</span> */}
+              <MdOutlineDeleteSweep className="text-3xl text-red-500 group-hover:text-white mx-auto " />
             </button>
           </div>
         </div>
