@@ -76,7 +76,7 @@ export default function ProjectAdd({setProjects,projects}) {
               <input
                 type="text"
                 name="title"
-                value={project.title}
+                value={project?.title}
                 onChange={(event) => handleFieldChange(index, event)}
                 className="w-full"
               />
@@ -98,7 +98,7 @@ export default function ProjectAdd({setProjects,projects}) {
               <input
                 type="text"
                 name="details"
-                value={project.details}
+                value={project?.details}
                 onChange={(event) => handleFieldChange(index, event)}
                 className="w-full"
               />
@@ -115,7 +115,7 @@ export default function ProjectAdd({setProjects,projects}) {
 
             {project.img && (
               <Image
-                src={project.img}
+                src={project?.img}
                 alt="Project"
                 width={200}
                 height={200}
