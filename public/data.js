@@ -5,7 +5,7 @@ export const data = {
     name: "TAZBIUL HASAN",
     profession: "WEB DEVELOPER",
     img: "/assets/images/file.png",
-    address: "100 Main St, Blacktown NSW 2148, Australia",
+    address: "Keraniganj Model, Dhaka-1310",
     email: ["sohantajbiul210@gmail.com"],
     phone: ["+(880) 1740191437", "+(880) 1840118827"],
     social_links: [
