@@ -152,7 +152,7 @@ export default function Profile() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+console.log(event.target.bio.value);
     const newProfile = {
       profile: {
         logo: event.target.logo.value,
@@ -174,11 +174,12 @@ export default function Profile() {
       },
       about_me: {
         img: image2,
-        description: event.target.description.value,
+        description: event.target.bio.value,
       },
       skills,
       projects,
     };
+    console.log("🚀 ~ handleSubmit ~ newProfile:", newProfile)
 
     try {
       const resp = await fetch(
@@ -299,15 +300,15 @@ export default function Profile() {
             </label>
 
             <label
-              htmlFor=""
+              
               className="dashboard-input flex items-center gap-2 whitespace-nowrap"
             >
               About Me-
               <input
                 defaultValue={fullProfile?.about_me?.description}
-                name="description"
+                name="bio"
                 type="text"
-                placeholder="Write Something You"
+                placeholder="Write Something about You"
                 className="w-full"
               />
             </label>
