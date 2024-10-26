@@ -10,8 +10,14 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { profileContext } from "@/app/provider/profileProvider";
-
+import { motion, useScroll, useSpring } from "framer-motion";
 export default function Navbar() {
+const { scrollYProgress } = useScroll();
+const scaleX = useSpring(scrollYProgress, {
+  stiffness: 100,
+  damping: 15,
+  restDelta: 0.001,
+});
   const user = useSession()
     const [selectedLink, setSelectedLink] = useState(0);
   const { menuBar, setMenuBar } = useContext(MenuBarContext);
@@ -48,18 +54,24 @@ export default function Navbar() {
         } transition-all duration-500`}
       >
         <div className="flex items-center justify-between primary-width bg-primary_black relative ">
-          <div className="flex items-center gap-2">
-            {/* Logo */}
-            <h1 className="font-logo text-white text-xl sm:text-2xl md:text-4xl font-bold">
-              {profile ? (
-                profile?.profile?.logo
-              ) : (
-                <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
+          <div className="flex flex-col relative">
+            <div className="flex items-center gap-2">
+              {/* Logo */}
+              <h1 className="font-logo text-white text-xl sm:text-2xl md:text-4xl font-bold">
+                {profile ? (
+                  profile?.profile?.logo
+                ) : (
+                  <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
+                )}
+              </h1>
+              {user?.status === "authenticated" && (
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               )}
-            </h1>
-            {user?.status === "authenticated" && (
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            )}
+            </div>
+            <motion.div
+              className="progress-bar"
+              style={{ scaleX }}
+            ></motion.div>
           </div>
           <div className="flex items-center space-x-10">
             {/* Navmenu */}
@@ -131,19 +143,18 @@ export default function Navbar() {
                   items.map((item, index) => (
                     <Menulinks key={index} item={item} index={index} />
                   ))}
-                {user?.status === "authenticated" &&
-                
-                <div className="transition duration-500 ease-in-out">
-                  <Link
-                    scroll={true}
-                    href={"./dashboard/profile"}
-                    className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit"
-                    style={{ fontWeight: 500 }}
-                  >
-                    <h6 className="text-sm font-bold">DashBoard</h6>
-                  </Link>
-                </div>
-                }
+                {user?.status === "authenticated" && (
+                  <div className="transition duration-500 ease-in-out">
+                    <Link
+                      scroll={true}
+                      href={"./dashboard/profile"}
+                      className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit"
+                      style={{ fontWeight: 500 }}
+                    >
+                      <h6 className="text-sm font-bold">DashBoard</h6>
+                    </Link>
+                  </div>
+                )}
                 <div className="transition duration-300 ease-in-out">
                   <button
                     className=" text-black py-1 px-4 md:hidden block cursor-pointer ml-auto bg-gray-200 rounded-full w-fit text-sm font-bold"

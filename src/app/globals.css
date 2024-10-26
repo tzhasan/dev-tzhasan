@@ -46,4 +46,13 @@ backdrop-filter: blur( 2px );
 border-radius: 10px;
 border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
-
+.progress-bar {
+  position: absolute; /* Fix position on the left side */
+  bottom: 0; /* Align to top */
+  left: 0; /* Align to left */
+  width: 100%; /* Width of the scrollbar */
+  height: 2px; /* Full height of the viewport */
+  background-color: #5F6061; /* Color of the scrollbar */
+  transform-origin: 0%; /* Set origin for rotation */
+   /* Ensure it’s above other elements */
+}
