@@ -13,7 +13,6 @@ export default function HomePage() {
   const { profile, setProfile, loading, setLoading } =
     useContext(profileContext);
 
-  console.log("🚀 ~ HomePage ~ profile:", profile);
 
   if (loading) {
     return <Loading />;

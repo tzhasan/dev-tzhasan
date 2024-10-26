@@ -40,7 +40,7 @@ todo-
 1. *done* Homepage loading every time need to stop it.
 2. _done_ Need to change the card for projects
 3. _done_ Need to make responsive for mobile view dashboard page
-4. Need to hide the dashboard if user not login
+4. *done*Need to hide the dashboard if user not login
 5. *done*Skill section Should be single column for mobile view
 6. *done*Need to add a model button and put the features about my portfolio.
 7. Need for animation package for my portfolio
@@ -48,5 +48,5 @@ todo-
 9. _done_ prject image is not setting up properly
 10. *done*From Projects details page to home page , it should be auto scroll to last position.
 11. *done*logo from navbar need to fix , its static now .
-12. skill card need to change the x padding margin for mobile view.
+12. *done*skill card need to change the x padding margin for mobile view.
 13. *done*projects carousel need to change.
