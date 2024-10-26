@@ -11,9 +11,9 @@ import { profileContext } from "@/app/provider/profileProvider";
 
 export default function HomePage() {
   const { profile, setProfile, loading, setLoading } =
-  useContext(profileContext);
-  
-  console.log("🚀 ~ HomePage ~ profile:", profile)
+    useContext(profileContext);
+
+  console.log("🚀 ~ HomePage ~ profile:", profile);
 
   if (loading) {
     return <Loading />;
@@ -55,12 +55,12 @@ export default function HomePage() {
             <br /> 3. You can set your information and images to personalize and
             experience the website. Don&#39;t worry, your profile will be saved
             in the database.
-            <br /> 4. In the dashboard, messages are only a demo version. The
-            admin can see the actual messages sent by users from the contact
-            form.
-            <br /> 5. You can&#39;t share your profile with others. Only the
-            admin&#39;s profile will be visible to all, and if you sign out, you
-            will see the admin&#39;s profile.
+            <br /> 4. In the dashboard, messages are only a demo version. Tz
+            Hasan Sohan can see the actual messages sent by users from the
+            contact form.
+            <br /> 5. You can&#39;t share your profile with others. Only the Tz
+            Hasan Sohan&#39;s profile will be visible to all, and if you sign
+            out, you will see the Tz Hasan Sohan&#39;s profile.
           </p>
 
           <p className="py-4">
