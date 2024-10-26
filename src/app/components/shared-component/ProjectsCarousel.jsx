@@ -32,7 +32,7 @@ export default function ProjectsCarousel({ projects }) {
       className="mySwiper"
     >
       {projects.map((project, index) => (
-        <SwiperSlide key={index} onClick={() => router.push(project.link)}>
+        <SwiperSlide key={index} onClick={() => router.push(`/projectDetails/${index}`)}>
           <Image
             width={1500}
             height={500}

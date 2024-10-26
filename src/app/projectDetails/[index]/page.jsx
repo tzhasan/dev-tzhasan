@@ -1,6 +1,5 @@
 "use client";
 import Button from "@/app/components/shared-component/button";
-import Navbar from "@/app/components/shared-component/navbar/navbar";
 import { getProjects } from "@/app/utils/dataFetch";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -13,6 +12,7 @@ export default function Page({ params }) {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true); 
   const router = useRouter();
+
   const handleGoBack = () => {
     router.back()
   }
@@ -40,6 +40,8 @@ export default function Page({ params }) {
   const projectIndex = parseInt(params.index, 10);
 
   const theProject = projects[projectIndex];
+
+
   return (
     <div className="bg-white dark:bg-darkmode min-h-screen p-10 ">
       {loading ? (
@@ -74,11 +76,13 @@ export default function Page({ params }) {
                 width={500}
                 height={500}
                 alt="Project Image"
+                quality={100}
                 className="w-full h-auto object-cover"
               />
             </div>
           </div>
         </div>
+        
       )}
     </div>
   );

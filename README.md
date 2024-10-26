@@ -49,4 +49,4 @@ todo-
 10. *done*From Projects details page to home page , it should be auto scroll to last position.
 11. *done*logo from navbar need to fix , its static now .
 12. skill card need to change the x padding margin for mobile view.
-13. projects carousel need to change.
+13. *done*projects carousel need to change.

@@ -3,7 +3,6 @@ import React from "react";
 import Underline from "../shared-component/underline.jsx";
 import Waveup from "../../../../public/assets/icons/waveup.jsx";
 import Wavedown from "../../../../public/assets/icons/wavedown.jsx";
-import ProjectCard from "../shared-component/projectCard.jsx";
 import ProjectsCarousel from "../shared-component/ProjectsCarousel.jsx";
 export default function Projects({ projects }) {
   return (
@@ -30,7 +29,11 @@ export default function Projects({ projects }) {
                 {projects ? (
                   <ProjectsCarousel projects={projects} />
                 ) : (
-                  <div className="skeleton h-[30vh] "></div>
+                  <div className="flex flex-col md:flex-row gap-5 md:gap-0 items-center justify-around">
+                    <div className="skeleton h-[30vh] w-80"></div>
+                    <div className="skeleton h-[30vh] w-80"></div>
+                    <div className="skeleton h-[30vh] w-80"></div>
+                  </div>
                 )}
               </div>
               {/*  */}
