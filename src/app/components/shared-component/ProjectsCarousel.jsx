@@ -40,7 +40,7 @@ export default function ProjectsCarousel({ projects }) {
             alt={project.title}
             className="cursor-pointer"
           />
-          <div className="text-center mt-2 mb-8 font-bold dark">{project.title}</div>
+          <div className="text-center mt-2 mb-8 font-bold dark text-sm md:text-xl">{project.title}</div>
         </SwiperSlide>
       ))}
     </Swiper>

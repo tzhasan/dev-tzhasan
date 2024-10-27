@@ -1,33 +1,98 @@
-import { themeProvider } from '@/app/provider/themeProvider';
-import Image from 'next/image';
-import React, { useContext } from 'react'
+import { themeProvider } from "@/app/provider/themeProvider";
+import Image from "next/image";
+import React, { useContext } from "react";
+import { delay, motion } from "framer-motion";
 
-export default function Banner({profile}) {
+const motionStyle = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1, // Delay between each letter
+    },
+  },
+};
+
+// Define keyframes for the curve path
+const curvePathStyle = {
+  hidden: {
+    opacity: 0,
+    x: 600,
+    y: -500,
+  },
+  show: {
+    opacity: 1,
+    x: [600,400, 0],
+    y: [-500,-400, 0],
+    transition: {
+      duration: 2,
+      ease: "easeInOut",
+    },
+  },
+};
+export default function Banner({ profile }) {
+   const name = profile ? `I'M ${profile.name}` : "";
+   const profession = profile ? profile.profession : ""; 
+    const nameArray = name.split("");
+    const profArray = profession.split("");
+const nameArrayDuration = nameArray.length * 0.1;
   const { isChecked, setisChecked } = useContext(themeProvider);
+
   return (
     <div className="bg-primary_black pt-[75px] " id="banner">
       <div className="primary-width flex flex-col md:flex-row justify-between items-center gap-5">
         <div className="md:space-y-3 space-y-1 mr-auto md:mx-auto">
-          <h1
-            className="lg:text-6xl text-2xl text-white"
-            style={{ fontWeight: 200 }}
-          >
-            {profile ? (
-              "I'M" + " " + profile?.name
-            ) : (
-              <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
-            )}
-          </h1>
-          <h2
-            className="md:text-2xl text-md text-white "
-            style={{ fontWeight: 200, letterSpacing: 5 }}
-          >
-            {profile ? (
-              profile?.profession
-            ) : (
-              <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
-            )}
-          </h2>
+          {profile ? (
+            <motion.div variants={motionStyle} initial="hidden" animate="show">
+              <motion.p
+                className="lg:text-6xl text-2xl text-white"
+                style={{ fontWeight: 200 }}
+              >
+                {nameArray.map((t, index) => (
+                  <motion.span
+                    key={index}
+                    variants={curvePathStyle}
+                    style={{ display: "inline-block" }} // Ensure each letter animates independently
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {t === " " ? "\u00A0" : t}
+                  </motion.span>
+                ))}
+              </motion.p>
+            </motion.div>
+          ) : (
+            <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
+          )}
+          {profile ? (
+            <motion.div
+              variants={motionStyle}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.p
+                className="md:text-2xl text-md text-white "
+                style={{
+                  fontWeight: 200,
+                  letterSpacing: 5,
+                }}
+              >
+                {profArray.map((t, index) => (
+                  <motion.span
+                    key={index}
+                    variants={curvePathStyle}
+                    style={{ display: "inline-block" }} // Ensure each letter animates independently
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {t === " " ? "\u00A0" : t}
+                  </motion.span>
+                ))}
+              </motion.p>
+            </motion.div>
+          ) : (
+            <span className="loading loading-dots loading-md bg-white dark:bg-black"></span>
+          )}
         </div>
         <div>
           {/* IMAGE */}

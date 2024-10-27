@@ -37,7 +37,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 todo-
 
-1. *done* Homepage loading every time need to stop it.
+1. _done_ Homepage loading every time need to stop it.
 2. _done_ Need to change the card for projects
 3. _done_ Need to make responsive for mobile view dashboard page
 4. *done*Need to hide the dashboard if user not login
