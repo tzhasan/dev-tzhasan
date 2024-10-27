@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { delay, motion } from "framer-motion";
 
-const motionStyle = {
+const motionStyle1 = {
   hidden: {
     opacity: 0,
   },
@@ -11,6 +11,18 @@ const motionStyle = {
     opacity: 1,
     transition: {
       staggerChildren: 0.1, // Delay between each letter
+    },
+  },
+};
+const motionStyle2 = {
+  hidden: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2, // Delay between each letter
+      delay:2
     },
   },
 };
@@ -37,7 +49,6 @@ export default function Banner({ profile }) {
    const profession = profile ? profile.profession : ""; 
     const nameArray = name.split("");
     const profArray = profession.split("");
-const nameArrayDuration = nameArray.length * 0.1;
   const { isChecked, setisChecked } = useContext(themeProvider);
 
   return (
@@ -45,7 +56,7 @@ const nameArrayDuration = nameArray.length * 0.1;
       <div className="primary-width flex flex-col md:flex-row justify-between items-center gap-5">
         <div className="md:space-y-3 space-y-1 mr-auto md:mx-auto">
           {profile ? (
-            <motion.div variants={motionStyle} initial="hidden" animate="show">
+            <motion.div variants={motionStyle1} initial="hidden" animate="show">
               <motion.p
                 className="lg:text-6xl text-2xl text-white"
                 style={{ fontWeight: 200 }}
@@ -67,7 +78,7 @@ const nameArrayDuration = nameArray.length * 0.1;
           )}
           {profile ? (
             <motion.div
-              variants={motionStyle}
+              variants={motionStyle2}
               initial="hidden"
               animate="show"
             >

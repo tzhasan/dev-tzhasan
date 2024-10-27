@@ -6,7 +6,7 @@ import Wavedown from "../../../../public/assets/icons/wavedown.jsx";
 import ProjectsCarousel from "../shared-component/ProjectsCarousel.jsx";
 export default function Projects({ projects }) {
   return (
-    <div className="w-full  bg-white dark:bg-darkmode">
+    <div className="w-full pt-10 bg-white dark:bg-darkmode">
       <Wavedown />
       <div
         id="projects"
