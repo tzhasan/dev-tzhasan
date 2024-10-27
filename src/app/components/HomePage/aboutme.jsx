@@ -130,7 +130,7 @@ export default function AboutMe({ about_me, skills, social_links }) {
                   {descriptionArray.map((d, index) => (
                     <motion.span
                       key={index} // Ensure a unique key for each character
-                      variants={motionStyle}
+                      variants={curvePathStyle}
                       style={{ display: "inline-block" }}
                       transition={{ delay: index * 0.05 }} // Sequential delay
                     >
