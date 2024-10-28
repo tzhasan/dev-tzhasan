@@ -4,6 +4,54 @@ import Underline from "../shared-component/underline";
 import SocialConnect from "../shared-component/socialConnect";
 import Button from "../shared-component/button";
 import toast, { Toaster } from "react-hot-toast";
+import { motion, Variants, delay } from "framer-motion";
+const aboutMeVariant = {
+  offscreen: {
+    opacity: 0,
+    x: -50,
+  },
+  onscreen: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 2.5,
+    },
+  },
+};
+const aboutMeVariant2 = {
+  offscreen: {
+    opacity: 0,
+    x: -50,
+  },
+  onscreen: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 1.5,
+      delay:1
+    },
+  },
+};
+const aboutMeVariant3 = {
+  offscreen: {
+    opacity: 0,
+    x: 50,
+  },
+  onscreen: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 1.5,
+      delay:1
+    },
+  },
+};
 export default function Contact({ profile, social_links }) {
   const [loading, setLoading] = useState(false);
   const [buttonText, setButtonText] = useState("Send Now");
@@ -92,14 +140,30 @@ export default function Contact({ profile, social_links }) {
     <div id="contact" className="bg-white dark:bg-darkmode py-5 md:py-10">
       <Toaster position="top-center" reverseOrder={false} />
       <div className="primary-width  ">
-        <div className="mb-5 pb-10">
-          <h1 className="md:text-4xl text-3xl dark" style={{ fontWeight: 900 }}>
-            Get In Touch
+        <motion.div
+          className="pb-0 md:pb-5"
+          variants={aboutMeVariant}
+          initial="offscreen"
+          whileInView="onscreen"
+          viewport={{ once: true, amount: 0.8 }}
+        >
+          <h1
+            className="md:text-4xl text-3xl  dark"
+            style={{ fontWeight: 900 }}
+          >
+            Get intouch
           </h1>
           <Underline />
-        </div>
-        <div className="flex flex-col-reverse md:flex-row  gap-5">
-          <div className="w-full md:w-2/6 ">
+        </motion.div>
+        <div className="flex flex-col-reverse md:flex-row  gap-10 md:gap-5 mt-5 md:mt-0">
+          {/*  */}
+          <motion.div
+            className="w-full md:w-2/6 "
+            variants={aboutMeVariant2}
+            initial="offscreen"
+            whileInView="onscreen"
+            viewport={{ once: true, amount: 0.8 }}
+          >
             <div className="space-y-4">
               <p className="dark">{profile?.address}</p>
               <div className="flex gap-2">
@@ -118,12 +182,17 @@ export default function Contact({ profile, social_links }) {
                     </p>
                   ))}
               </div>
-              <SocialConnect social_links={social_links} />
+              <SocialConnect social_links={social_links} className={'flex'}/>
             </div>
-          </div>
+          </motion.div>
           <div className="w-full md:w-4/6 ">
-            {" "}
-            <div className="relative  pb-14">
+            <motion.div
+              className="relative  pb-14"
+              variants={aboutMeVariant3}
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: true, amount: 0.8 }}
+            >
               <form onSubmit={handleSubmit} action="">
                 <div>
                   <div className="flex flex-col md:flex-row gap-5">
@@ -156,7 +225,7 @@ export default function Contact({ profile, social_links }) {
                   />
                 </div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

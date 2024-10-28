@@ -31,13 +31,13 @@ const motionStyle2 = {
 const curvePathStyle = {
   hidden: {
     opacity: 0,
-    x: 600,
-    y: -500,
+    x: 50,
+    y: 50,
   },
   show: {
     opacity: 1,
-    x: [600,400, 0],
-    y: [-500,-400, 0],
+    x: [50,100, 0],
+    y: [50,-100, 0],
     transition: {
       duration: 2,
       ease: "easeInOut",

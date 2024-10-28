@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
-import { motion, variants } from "framer-motion";
+import { motion } from "framer-motion";
 export default function SkillCard({ skill }) {
-  
-  
-
   return (
     <motion.div
       className="glassCard w-full flex p-2 cursor-pointer"
@@ -42,3 +39,12 @@ export default function SkillCard({ skill }) {
     </motion.div>
   );
 }
+
+
+
+
+
+
+
+
+
