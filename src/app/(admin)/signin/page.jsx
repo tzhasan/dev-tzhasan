@@ -24,13 +24,9 @@ export default function Page() {
       const respns = await signIn("credentials", {
         email,
         password,
-        redirect: false, // Prevent immediate redirect
+        redirect: true,
         callbackUrl: "/",
       });
-
-      // Log the full response for debugging
-      console.log("Sign-in Response:", respns);
-
       if (respns?.error) {
         // Log the error part of the response
         console.error("Error details:", respns?.error);

@@ -8,24 +8,25 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Page() {
   const [Loading, setLoading] = useState(false);
   const router = useRouter();
+  console.log("🚀 ~ Page ~ router:", router)
 
   const handleSubmit = async (event) => {
-    toast("Generating User and New Profile", {
-      icon: "❗",
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
     event.preventDefault();
     setLoading(true);
     const newUser = {
       email: event.target.email.value,
       password: event.target.password.value,
     };
+    toast("Generating User and New Profile", {
+    icon: "❗",
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
     try {
-      const response = await fetch(`${NEXT_PUBLIC_NEXTAUTH_URL}/api/signup`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_NEXTAUTH_URL}/api/signup`, {
         method: "POST",
         headers: {
           "content-type": "application/json",
